@@ -1,6 +1,7 @@
 import { setRequestLocale } from 'next-intl/server';
 import SiteHeader from '@/components/SiteHeader';
 import SmoothScroll from '@/components/SmoothScroll';
+import ScrollSpine from '@/components/ScrollSpine';
 import Hero from '@/components/sections/Hero';
 import Features from '@/components/sections/Features';
 import Categories from '@/components/sections/Categories';
@@ -29,6 +30,7 @@ export default async function HomePage({
   return (
     <>
       <SmoothScroll />
+      <ScrollSpine />
       <SiteHeader settings={data.settings} />
       <main id="top">
         <Hero content={data.content} />
