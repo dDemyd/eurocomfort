@@ -167,10 +167,9 @@ export default function Footer({
         <div className="flex flex-wrap items-center justify-between gap-5 border-t border-hair-d py-[26px] pb-[34px] font-mono text-[11px] tracking-[0.12em] text-white/50">
           <span>{t('copyright')}</span>
           <div className="flex flex-wrap gap-6">
-            <a href="#" className="hover:text-brand">
-              {t('privacy')}
+            <a href="https://www.instagram.com/helldemid/" className="hover:text-brand">
+              {t('designedBy')}
             </a>
-            <span>{t('designedBy')}</span>
           </div>
         </div>
       </div>
