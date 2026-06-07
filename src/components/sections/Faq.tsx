@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import Reveal from '../Reveal';
+import RichText from '../RichText';
 import type { FaqItem, LocalizedRecord } from '@/lib/queries';
 
 type QA = { n: string; q: string; a: string };
@@ -75,7 +76,9 @@ export default function Faq({
             {t('eyebrow')}
           </Reveal>
           <Reveal as="h2" i={1} className="display-title col-span-12 md:col-span-8 md:col-start-1 md:row-start-2">
-            {content['faq.title'] || t('titleBefore')} {!content['faq.title'] ? <span className="mark">{t('titleMark')}</span> : null}
+            <RichText value={content['faq.title']}>
+              {t('titleBefore')} <span className="mark">{t('titleMark')}</span>
+            </RichText>
           </Reveal>
         </header>
 

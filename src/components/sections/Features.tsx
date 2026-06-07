@@ -1,5 +1,6 @@
 import { useTranslations } from 'next-intl';
 import Reveal from '../Reveal';
+import RichText from '../RichText';
 import type { LocalizedRecord } from '@/lib/queries';
 
 type Point = { n: string; title: string; text: string };
@@ -25,12 +26,12 @@ export default function Features({ content = {} }: { content?: LocalizedRecord }
           as="p"
           className="col-span-12 mb-[clamp(48px,7vh,90px)] font-display font-bold uppercase leading-[1.02] tracking-tighter2 text-[clamp(1.8rem,4vw,3.3rem)] md:col-span-8"
         >
-          {lead || (
+          <RichText value={lead}>
             <>
               {t('lead.before')} <span className="text-brand">{t('lead.mark')}</span>{' '}
               {t('lead.after')}
             </>
-          )}
+          </RichText>
         </Reveal>
 
         <div className="col-span-12 grid grid-cols-1 md:grid-cols-3">

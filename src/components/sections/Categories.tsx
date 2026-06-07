@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import Reveal from '../Reveal';
+import RichText from '../RichText';
 import type { Category, LocalizedRecord } from '@/lib/queries';
 
 type Tile = {
@@ -10,13 +11,6 @@ type Tile = {
   alt: string;
   image: string;
 };
-
-function MarkedTitle({ value, fallbackBefore, fallbackMark }: { value?: string; fallbackBefore: string; fallbackMark: string }) {
-  if (!value) return <>{fallbackBefore} <span className="mark">{fallbackMark}</span></>;
-  const parts = value.trim().split(/\s+/);
-  const mark = parts.pop();
-  return <>{parts.join(' ')} {mark ? <span className="mark">{mark}</span> : null}</>;
-}
 
 export default function Categories({
   categories = [],
@@ -53,11 +47,9 @@ export default function Categories({
             i={1}
             className="display-title col-span-12 md:col-span-8 md:col-start-1 md:row-start-2"
           >
-            <MarkedTitle
-              value={content['catalog.title']}
-              fallbackBefore={t('titleBefore')}
-              fallbackMark={t('titleMark')}
-            />
+            <RichText value={content['catalog.title']}>
+              {t('titleBefore')} <span className="mark">{t('titleMark')}</span>
+            </RichText>
           </Reveal>
           <Reveal
             as="p"

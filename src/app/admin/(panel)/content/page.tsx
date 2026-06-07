@@ -9,10 +9,14 @@ export const dynamic = 'force-dynamic';
 const KEYS = [
   { key: 'hero.title', label: 'Hero · Заголовок' },
   { key: 'hero.subtitle', label: 'Hero · Підзаголовок' },
+  { key: 'catalog.title', label: 'Каталог · Заголовок' },
+  { key: 'catalog.lede', label: 'Каталог · Опис' },
   { key: 'why.title', label: 'WhyUs · Заголовок' },
   { key: 'why.lede', label: 'WhyUs · Опис' },
   { key: 'process.title', label: 'Process · Заголовок' },
   { key: 'process.lede', label: 'Process · Опис' },
+  { key: 'projects.title', label: 'Projects · Заголовок' },
+  { key: 'reviews.title', label: 'Reviews · Заголовок' },
   { key: 'reviews.lede', label: 'Reviews · Опис' },
   { key: 'lead.title', label: 'Lead · Заголовок' },
 ];
@@ -38,9 +42,21 @@ export default async function ContentPage() {
       <h1 className="mb-2 font-display text-[28px] font-extrabold uppercase tracking-tight2">
         Контент
       </h1>
-      <p className="mb-6 text-[13px] text-ink-2">
-        Тексти секцій лендинга. Залиште поле порожнім, щоб використати дефолтний переклад з messages/*.json.
-      </p>
+      <div className="mb-6 max-w-[760px] text-[13px] text-ink-2">
+        <p>
+          Тексти секцій лендинга. Залиште поле порожнім, щоб використати дефолтний переклад з{' '}
+          <code className="font-mono">messages/*.json</code>.
+        </p>
+        <p className="mt-2">
+          У заголовках можна позначати фрагмент брендовим червоним кольором тегом{' '}
+          <code className="font-mono text-ink">&lt;red&gt;текст&lt;/red&gt;</code> і
+          переносити рядок тегом <code className="font-mono text-ink">&lt;br&gt;</code>.
+          Інші HTML-теги ігноруються.
+        </p>
+        <p className="mt-1 text-ink-2">
+          Приклад: <code className="font-mono">Понад &lt;red&gt;10 000 м²&lt;/red&gt;&lt;br&gt;засклених обʼєктів</code>
+        </p>
+      </div>
 
       <form action={saveContentAction} className="grid max-w-[760px] gap-6">
         {KEYS.map(({ key, label }) => (

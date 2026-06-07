@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import Reveal from '../Reveal';
+import RichText from '../RichText';
 import type { LocalizedRecord } from '@/lib/queries';
 import {
   formatPhoneInput,
@@ -228,13 +229,11 @@ export default function LeadForm({
             className="display-title mt-[14px]"
             style={{ fontSize: 'clamp(2rem,4vw,3.4rem)' }}
           >
-            {content['lead.title'] || t('title1')}
-            {!content['lead.title'] ? (
-              <>
-                <br />
-                <span className="mark">{t('titleMark')}</span>
-              </>
-            ) : null}
+            <RichText value={content['lead.title']}>
+              {t('title1')}
+              <br />
+              <span className="mark">{t('titleMark')}</span>
+            </RichText>
           </Reveal>
           <div className="mt-[42px] flex flex-col gap-[22px]">
             {contacts.map((c, idx) => (

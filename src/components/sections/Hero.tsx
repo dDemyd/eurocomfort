@@ -1,6 +1,7 @@
 import { useTranslations } from 'next-intl';
 import Reveal from '../Reveal';
 import HeroParallaxBg from '../HeroParallaxBg';
+import RichText from '../RichText';
 import type { LocalizedRecord } from '@/lib/queries';
 
 type Stat = { v: string; em: string; k: string };
@@ -13,6 +14,7 @@ export default function Hero({ content = {} }: { content?: LocalizedRecord }) {
     content['stats.projects'],
     content['stats.satisfaction'],
   ];
+  const customTitle = content['hero.title'];
 
   return (
     <section
@@ -32,7 +34,7 @@ export default function Hero({ content = {} }: { content?: LocalizedRecord }) {
       </div>
 
       {/* контент */}
-      <div className="relative z-[5] mx-auto grid w-full max-w-wrap grid-cols-12 gap-x-6 content-center px-[var(--gutter)] pb-[clamp(230px,30vh,320px)] pt-[120px]">
+      <div className="hero-content relative z-[5] mx-auto grid w-full max-w-wrap grid-cols-12 gap-x-6 content-center px-[var(--gutter)] pb-[clamp(230px,30vh,320px)] pt-[120px]">
         <div
           className="col-span-1 hidden self-center font-mono text-[12px] tracking-[0.28em] text-brand md:[writing-mode:vertical-rl] md:rotate-180 md:block"
           aria-hidden="true"
@@ -51,15 +53,23 @@ export default function Hero({ content = {} }: { content?: LocalizedRecord }) {
           </Reveal>
 
           <h1 className="mt-[14px] font-display font-black uppercase leading-[0.9] tracking-tightest text-[clamp(2.9rem,8.2vw,8.4rem)] [text-shadow:0_2px_24px_rgba(0,0,0,0.35)]">
-            <Reveal line i={1} as="span">
-              {t('line1')}
-            </Reveal>
-            <Reveal line i={2} as="span">
-              {t('line2')}
-            </Reveal>
-            <Reveal line i={3} as="span">
-              <span className="text-brand">{t('line3')}</span>
-            </Reveal>
+            {customTitle ? (
+              <Reveal line i={1} as="span">
+                <RichText value={customTitle} />
+              </Reveal>
+            ) : (
+              <>
+                <Reveal line i={1} as="span">
+                  {t('line1')}
+                </Reveal>
+                <Reveal line i={2} as="span">
+                  {t('line2')}
+                </Reveal>
+                <Reveal line i={3} as="span">
+                  <span className="text-brand">{t('line3')}</span>
+                </Reveal>
+              </>
+            )}
             <Reveal
               as="span"
               i={5}
@@ -87,7 +97,7 @@ export default function Hero({ content = {} }: { content?: LocalizedRecord }) {
       </div>
 
       {/* stats */}
-      <div className="absolute inset-x-[var(--gutter)] bottom-10 z-[5] mx-auto flex max-w-wrap flex-wrap gap-x-[clamp(28px,5vw,80px)] gap-y-4 border-t border-hair-d pt-6">
+      <div className="hero-stats absolute inset-x-[var(--gutter)] bottom-10 z-[5] mx-auto flex max-w-wrap flex-wrap gap-x-[clamp(28px,5vw,80px)] gap-y-4 border-t border-hair-d pt-6">
         {stats.map((s, idx) => (
           <Reveal key={idx} i={idx}>
             <div className="font-mono text-[clamp(26px,3vw,38px)] font-bold leading-none tracking-tight2 tabular-nums">

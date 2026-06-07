@@ -45,7 +45,7 @@ export default function Footer({
           target="_blank"
           rel="noopener"
           aria-label={t('addressOpenAria')}
-          className="my-10 flex flex-wrap items-center gap-5 border border-hair-d bg-[#0c0c0c] p-[22px_26px] transition-colors duration-200 ease-ease hover:border-brand hover:bg-[#101010]"
+          className="my-10 flex flex-wrap items-center gap-5 border border-hair-d bg-[#0c0c0c] p-[22px_26px] transition-colors duration-200 ease-ease hover:border-brand hover:bg-[#101010] map-link"
         >
           <span className="flex h-[46px] w-[46px] flex-none items-center justify-center border border-hair-d text-brand">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" /><circle cx="12" cy="10" r="3" /></svg>

@@ -1,5 +1,6 @@
 import { useTranslations } from 'next-intl';
 import Reveal from '../Reveal';
+import RichText from '../RichText';
 import type { LocalizedRecord, Testimonial } from '@/lib/queries';
 
 type Review = { text: string; avatar: string; name: string; role: string };
@@ -35,7 +36,9 @@ export default function Testimonials({
             {t('eyebrow')}
           </Reveal>
           <Reveal as="h2" i={1} className="display-title col-span-12 md:col-span-8 md:col-start-1 md:row-start-2">
-            {t('titleBefore')} <span className="mark">{t('titleMark')}</span>
+            <RichText value={content['reviews.title']}>
+              {t('titleBefore')} <span className="mark">{t('titleMark')}</span>
+            </RichText>
           </Reveal>
           <Reveal
             as="p"

@@ -1,5 +1,6 @@
 import { useTranslations } from 'next-intl';
 import Reveal from '../Reveal';
+import RichText from '../RichText';
 import type { LocalizedRecord } from '@/lib/queries';
 
 type Step = { n: string; title: string; text: string };
@@ -19,11 +20,9 @@ export default function Steps({ content = {} }: { content?: LocalizedRecord }) {
             {t('eyebrow')}
           </Reveal>
           <Reveal as="h2" i={1} className="display-title col-span-12 md:col-span-8 md:col-start-1 md:row-start-2">
-            {content['process.title'] || (
-              <>
-                {t('titleBefore')} <span className="mark">{t('titleMark')}</span>
-              </>
-            )}
+            <RichText value={content['process.title']}>
+              {t('titleBefore')} <span className="mark">{t('titleMark')}</span>
+            </RichText>
           </Reveal>
           <Reveal
             as="p"

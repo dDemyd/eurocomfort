@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import Reveal from '../Reveal';
+import RichText from '../RichText';
 import type { LocalizedRecord, Project } from '@/lib/queries';
 
 type Slide = {
@@ -198,10 +199,12 @@ export default function Projects({
             {t('eyebrow')}
           </Reveal>
           <Reveal as="h2" i={1} className="display-title col-span-12 md:col-span-8 md:col-start-1 md:row-start-2">
-            {t('titleBefore')}{' '}
-            <span className="mark whitespace-nowrap">{t('titleMark')}</span>
-            <br />
-            {t('titleAfter')}
+            <RichText value={content['projects.title']}>
+              {t('titleBefore')}{' '}
+              <span className="mark whitespace-nowrap">{t('titleMark')}</span>
+              <br />
+              {t('titleAfter')}
+            </RichText>
           </Reveal>
           <Reveal
             as="p"
