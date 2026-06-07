@@ -1,14 +1,24 @@
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import Reveal from '../Reveal';
+import type { Category, LocalizedRecord } from '@/lib/queries';
 
 type Nav = { label: string; href: string };
 
-export default function Footer() {
+export default function Footer({
+  categories = [],
+  settings = {},
+}: {
+  categories?: Category[];
+  settings?: LocalizedRecord;
+}) {
   const t = useTranslations('footer');
   const tCommon = useTranslations('common');
   const navLinks = t.raw('navLinks') as Nav[];
-  const catalogLinks = t.raw('catalogLinks') as string[];
+  const catalogLinks = categories.length > 0 ? categories.map((category) => category.title) : t.raw('catalogLinks') as string[];
+  const phone = settings['contact.phone_display'] || t('phoneFull');
+  const email = settings['contact.email'] || t('emailFull');
+  const address = settings['contact.address'] || t('addressFull');
 
   return (
     <footer
@@ -44,7 +54,7 @@ export default function Footer() {
             <span className="mb-[6px] block font-mono text-[10.5px] uppercase tracking-monoXl text-white/50">
               {t('addressLabel')}
             </span>
-            {tCommon('addressShort')}
+            {settings['contact.address'] || tCommon('addressShort')}
           </span>
           <span className="flex-none whitespace-nowrap font-mono text-[11px] uppercase tracking-mono text-brand">
             {t('addressOpen')}
@@ -132,7 +142,7 @@ export default function Footer() {
                   className="inline-flex items-center gap-[10px] text-[15px] text-white/80 transition-colors hover:text-brand"
                 >
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.06 6.184z" /></svg>
-                  {t('phoneFull')}
+                  {phone}
                 </a>
               </li>
               <li>
@@ -141,13 +151,13 @@ export default function Footer() {
                   className="inline-flex items-center gap-[10px] text-[15px] text-white/80 transition-colors hover:text-brand"
                 >
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" /></svg>
-                  {t('emailFull')}
+                  {email}
                 </a>
               </li>
               <li>
                 <span className="inline-flex items-center gap-[10px] text-[15px] text-white/80">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" /><circle cx="12" cy="10" r="3" /></svg>
-                  {t('addressFull')}
+                  {address}
                 </span>
               </li>
             </ul>

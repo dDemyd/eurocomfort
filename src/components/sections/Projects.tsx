@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import Reveal from '../Reveal';
+import type { LocalizedRecord, Project } from '@/lib/queries';
 
 type Slide = {
   image: string;
@@ -20,9 +21,25 @@ const ratioClass: Record<Slide['ratio'], string> = {
   md: 'aspect-square',
 };
 
-export default function Projects() {
+export default function Projects({
+  projects = [],
+  content = {},
+}: {
+  projects?: Project[];
+  content?: LocalizedRecord;
+}) {
   const t = useTranslations('projects');
-  const slides = t.raw('slides') as Slide[];
+  const fallbackSlides = t.raw('slides') as Slide[];
+  const slides =
+    projects.length > 0
+      ? projects.map((project, index) => ({
+          image: project.cover || project.images[0] || fallbackSlides[index % fallbackSlides.length]?.image || '/assets/facade.webp',
+          alt: project.title || project.location,
+          loc: project.location || project.title,
+          sys: project.system || project.description,
+          ratio: (index % 3 === 0 ? 'tall' : index % 3 === 1 ? 'wide' : 'md') as Slide['ratio'],
+        }))
+      : fallbackSlides;
   const placeholders = t.raw('placeholders') as Placeholder[];
 
   const trackRef = useRef<HTMLDivElement>(null);
@@ -191,7 +208,7 @@ export default function Projects() {
             i={2}
             className="lede col-span-12 md:col-span-4 md:col-start-9 md:row-start-3"
           >
-            {t('lede')}
+            {content['projects.lede'] || t('lede')}
           </Reveal>
         </header>
 
@@ -248,6 +265,7 @@ export default function Projects() {
                     src={slide.image}
                     alt={slide.alt}
                     fill
+                    loading="lazy"
                     sizes="(max-width: 768px) 80vw, 40vw"
                     draggable={false}
                     className="pointer-events-none object-cover [filter:grayscale(1)_contrast(1.06)] transition-[filter,transform] duration-700 ease-ease group-hover:scale-[1.05] group-hover:[filter:grayscale(0)_contrast(1.02)]"
@@ -267,7 +285,7 @@ export default function Projects() {
                 </a>
               ))}
 
-              {placeholders.map((ph, idx) => (
+              {projects.length === 0 && placeholders.map((ph, idx) => (
                 <div
                   key={`ph-${idx}`}
                   data-slide

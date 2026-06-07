@@ -1,11 +1,27 @@
 import { useTranslations } from 'next-intl';
 import Reveal from '../Reveal';
+import type { LocalizedRecord, Testimonial } from '@/lib/queries';
 
 type Review = { text: string; avatar: string; name: string; role: string };
 
-export default function Testimonials() {
+export default function Testimonials({
+  testimonials = [],
+  content = {},
+}: {
+  testimonials?: Testimonial[];
+  content?: LocalizedRecord;
+}) {
   const t = useTranslations('reviews');
-  const items = t.raw('items') as Review[];
+  const fallbackItems = t.raw('items') as Review[];
+  const items =
+    testimonials.length > 0
+      ? testimonials.map((review) => ({
+          text: review.body,
+          avatar: review.author.slice(0, 2).toUpperCase(),
+          name: review.author,
+          role: '',
+        }))
+      : fallbackItems;
   const clients = t.raw('clients') as string[];
 
   return (
@@ -26,7 +42,7 @@ export default function Testimonials() {
             i={2}
             className="lede col-span-12 md:col-span-4 md:col-start-9 md:row-start-3"
           >
-            {t('lede')}
+            {content['reviews.lede'] || t('lede')}
           </Reveal>
         </header>
 

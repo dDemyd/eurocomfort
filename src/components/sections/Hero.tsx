@@ -1,12 +1,18 @@
 import { useTranslations } from 'next-intl';
 import Reveal from '../Reveal';
 import HeroParallaxBg from '../HeroParallaxBg';
+import type { LocalizedRecord } from '@/lib/queries';
 
 type Stat = { v: string; em: string; k: string };
 
-export default function Hero() {
+export default function Hero({ content = {} }: { content?: LocalizedRecord }) {
   const t = useTranslations('hero');
   const stats = t.raw('stats') as Stat[];
+  const statLabels = [
+    content['stats.experience'],
+    content['stats.projects'],
+    content['stats.satisfaction'],
+  ];
 
   return (
     <section
@@ -26,7 +32,7 @@ export default function Hero() {
       </div>
 
       {/* контент */}
-      <div className="relative z-[5] mx-auto grid w-full max-w-wrap grid-cols-12 gap-x-6 content-center px-[var(--gutter)] pb-32 pt-[120px]">
+      <div className="relative z-[5] mx-auto grid w-full max-w-wrap grid-cols-12 gap-x-6 content-center px-[var(--gutter)] pb-[clamp(230px,30vh,320px)] pt-[120px]">
         <div
           className="col-span-1 hidden self-center font-mono text-[12px] tracking-[0.28em] text-brand md:[writing-mode:vertical-rl] md:rotate-180 md:block"
           aria-hidden="true"
@@ -59,7 +65,7 @@ export default function Hero() {
               i={5}
               className="mt-[30px] block max-w-[48ch] font-body text-[clamp(15px,1.6vw,20px)] font-light normal-case leading-[1.55] tracking-[-0.005em] text-white/90"
             >
-              {t('sub')}
+              {content['hero.subtitle'] || t('sub')}
             </Reveal>
           </h1>
 
@@ -68,7 +74,7 @@ export default function Hero() {
             className="mt-10 flex flex-wrap items-center gap-[30px] [text-shadow:0_2px_24px_rgba(0,0,0,0.35)]"
           >
             <a href="#contact" className="btn btn--lg">
-              {t('ctaPrimary')} <span className="arr">→</span>
+              {content['hero.cta'] || t('ctaPrimary')} <span className="arr">→</span>
             </a>
             <a
               href="#catalog"
@@ -89,7 +95,7 @@ export default function Hero() {
               <em className="not-italic text-brand">{s.em}</em>
             </div>
             <div className="mt-2 max-w-[20ch] font-body text-[13px] font-light leading-[1.4] text-white/60">
-              {s.k}
+              {statLabels[idx] || s.k}
             </div>
           </Reveal>
         ))}

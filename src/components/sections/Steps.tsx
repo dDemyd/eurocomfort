@@ -1,9 +1,10 @@
 import { useTranslations } from 'next-intl';
 import Reveal from '../Reveal';
+import type { LocalizedRecord } from '@/lib/queries';
 
 type Step = { n: string; title: string; text: string };
 
-export default function Steps() {
+export default function Steps({ content = {} }: { content?: LocalizedRecord }) {
   const t = useTranslations('steps');
   const items = t.raw('items') as Step[];
 
@@ -18,14 +19,18 @@ export default function Steps() {
             {t('eyebrow')}
           </Reveal>
           <Reveal as="h2" i={1} className="display-title col-span-12 md:col-span-8 md:col-start-1 md:row-start-2">
-            {t('titleBefore')} <span className="mark">{t('titleMark')}</span>
+            {content['process.title'] || (
+              <>
+                {t('titleBefore')} <span className="mark">{t('titleMark')}</span>
+              </>
+            )}
           </Reveal>
           <Reveal
             as="p"
             i={2}
             className="lede col-span-12 md:col-span-4 md:col-start-9 md:row-start-3"
           >
-            {t('lede')}
+            {content['process.lede'] || t('lede')}
           </Reveal>
         </header>
 

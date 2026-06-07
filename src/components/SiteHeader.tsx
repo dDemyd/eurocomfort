@@ -4,14 +4,17 @@ import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import MobileNav from './MobileNav';
+import type { LocalizedRecord } from '@/lib/queries';
 
 const sectionIds = ['catalog', 'about', 'reviews', 'process', 'contact'];
 
-export default function SiteHeader() {
+export default function SiteHeader({ settings = {} }: { settings?: LocalizedRecord }) {
   const t = useTranslations('header');
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string | null>(null);
+  const phone = settings['contact.phone_display'] || '+380 (97) 969 04 03';
+  const [phonePrefix, phoneRest] = phone.replace('+380 ', '+380|').split('|');
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -121,7 +124,7 @@ export default function SiteHeader() {
           href="tel:+380979690403"
           className="hidden whitespace-nowrap border-l border-hair-d pl-[26px] font-mono text-[12px] tracking-[0.06em] text-white lg:inline-block"
         >
-          {t('phonePrefix')} <b className="font-medium text-brand">{t('phoneRest')}</b>
+          {phonePrefix || t('phonePrefix')} <b className="font-medium text-brand">{phoneRest || t('phoneRest')}</b>
         </a>
 
         <button

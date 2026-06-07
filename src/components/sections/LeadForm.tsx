@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import Reveal from '../Reveal';
+import type { LocalizedRecord } from '@/lib/queries';
 
 type Contact = { k: string; v: string };
 
@@ -41,10 +42,22 @@ function Field({
   );
 }
 
-export default function LeadForm() {
+export default function LeadForm({
+  settings = {},
+  content = {},
+}: {
+  settings?: LocalizedRecord;
+  content?: LocalizedRecord;
+}) {
   const t = useTranslations('form');
   const tCommon = useTranslations('common');
-  const contacts = t.raw('contacts') as Contact[];
+  const fallbackContacts = t.raw('contacts') as Contact[];
+  const contacts = [
+    { k: fallbackContacts[0]?.k || 'Телефон', v: settings['contact.phone_display'] || fallbackContacts[0]?.v || '+380 (97) 969 04 03' },
+    { k: fallbackContacts[1]?.k || 'Email', v: settings['contact.email'] || fallbackContacts[1]?.v || 'eurocomfortbc@gmail.com' },
+    { k: fallbackContacts[2]?.k || 'Адреса', v: settings['contact.address'] || fallbackContacts[2]?.v || '' },
+    fallbackContacts[3],
+  ].filter(Boolean) as Contact[];
   const optType = t.raw('options.type') as string[];
   const optArea = t.raw('options.area') as string[];
   const optStage = t.raw('options.stage') as string[];
@@ -68,9 +81,13 @@ export default function LeadForm() {
             className="display-title mt-[14px]"
             style={{ fontSize: 'clamp(2rem,4vw,3.4rem)' }}
           >
-            {t('title1')}
-            <br />
-            <span className="mark">{t('titleMark')}</span>
+            {content['lead.title'] || t('title1')}
+            {!content['lead.title'] ? (
+              <>
+                <br />
+                <span className="mark">{t('titleMark')}</span>
+              </>
+            ) : null}
           </Reveal>
           <div className="mt-[42px] flex flex-col gap-[22px]">
             {contacts.map((c, idx) => (

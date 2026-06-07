@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import Reveal from '../Reveal';
+import type { LocalizedRecord } from '@/lib/queries';
 
 type Item = { title: string; text: string };
 
@@ -11,7 +12,7 @@ const icons = [
   <svg key="4" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>,
 ];
 
-export default function WhyUs() {
+export default function WhyUs({ content = {} }: { content?: LocalizedRecord }) {
   const t = useTranslations('why');
   const items = t.raw('items') as Item[];
 
@@ -26,16 +27,20 @@ export default function WhyUs() {
             {t('eyebrow')}
           </Reveal>
           <Reveal as="h2" i={1} className="display-title col-span-12 md:col-span-8 md:col-start-1 md:row-start-2">
-            {t('title1')}
-            <br />
-            {t('title2Brand')} <span className="mark">{t('title2Mark')}</span>
+            {content['why.title'] || (
+              <>
+                {t('title1')}
+                <br />
+                {t('title2Brand')} <span className="mark">{t('title2Mark')}</span>
+              </>
+            )}
           </Reveal>
           <Reveal
             as="p"
             i={2}
             className="lede col-span-12 md:col-span-4 md:col-start-9 md:row-start-3"
           >
-            {t('lede')}
+            {content['why.lede'] || t('lede')}
           </Reveal>
         </header>
 

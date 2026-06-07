@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import Reveal from '../Reveal';
+import type { Category, LocalizedRecord } from '@/lib/queries';
 
 type Tile = {
   tn: string;
@@ -10,9 +11,32 @@ type Tile = {
   image: string;
 };
 
-export default function Categories() {
+function MarkedTitle({ value, fallbackBefore, fallbackMark }: { value?: string; fallbackBefore: string; fallbackMark: string }) {
+  if (!value) return <>{fallbackBefore} <span className="mark">{fallbackMark}</span></>;
+  const parts = value.trim().split(/\s+/);
+  const mark = parts.pop();
+  return <>{parts.join(' ')} {mark ? <span className="mark">{mark}</span> : null}</>;
+}
+
+export default function Categories({
+  categories = [],
+  content = {},
+}: {
+  categories?: Category[];
+  content?: LocalizedRecord;
+}) {
   const t = useTranslations('categories');
-  const tiles = t.raw('tiles') as Tile[];
+  const fallbackTiles = t.raw('tiles') as Tile[];
+  const tiles =
+    categories.length > 0
+      ? categories.map((category, index) => ({
+          tn: `${String(index + 1).padStart(2, '0')} / ${category.slug}`,
+          title: category.title,
+          meta: fallbackTiles[index]?.meta ?? '',
+          alt: category.title,
+          image: category.image || fallbackTiles[index]?.image || '/assets/facade.webp',
+        }))
+      : fallbackTiles;
 
   return (
     <section
@@ -29,14 +53,18 @@ export default function Categories() {
             i={1}
             className="display-title col-span-12 md:col-span-8 md:col-start-1 md:row-start-2"
           >
-            {t('titleBefore')} <span className="mark">{t('titleMark')}</span>
+            <MarkedTitle
+              value={content['catalog.title']}
+              fallbackBefore={t('titleBefore')}
+              fallbackMark={t('titleMark')}
+            />
           </Reveal>
           <Reveal
             as="p"
             i={2}
             className="lede col-span-12 md:col-span-4 md:col-start-9 md:row-start-3"
           >
-            {t('lede')}
+            {content['catalog.lede'] || t('lede')}
           </Reveal>
         </header>
 

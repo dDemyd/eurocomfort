@@ -1,35 +1,23 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import Reveal from '../Reveal';
+import type { FaqItem, LocalizedRecord } from '@/lib/queries';
 
 type QA = { n: string; q: string; a: string };
 
 function QAItem({
   item,
-  i,
   open,
   onToggle,
 }: {
   item: QA;
-  i: number;
   open: boolean;
   onToggle: () => void;
 }) {
-  const ansRef = useRef<HTMLDivElement>(null);
-  const [maxH, setMaxH] = useState('0px');
-
-  useEffect(() => {
-    if (!ansRef.current) return;
-    setMaxH(open ? `${ansRef.current.scrollHeight}px` : '0px');
-  }, [open]);
-
   return (
-    <Reveal
-      i={i}
-      className={`qa border-b border-hair-l ${open ? 'open' : ''}`}
-    >
+    <div className={`qa border-b border-hair-l ${open ? 'open' : ''}`}>
       <button
         type="button"
         aria-expanded={open}
@@ -45,21 +33,38 @@ function QAItem({
         <span className="qa-pm" aria-hidden="true" />
       </button>
       <div
-        ref={ansRef}
-        style={{ maxHeight: maxH }}
-        className="overflow-hidden transition-[max-height] duration-500 ease-ease"
+        className={[
+          'grid transition-[grid-template-rows] duration-300 ease-ease',
+          open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]',
+        ].join(' ')}
       >
-        <div className="max-w-[62ch] pb-8 pl-0 text-[16px] leading-[1.65] text-ink-2 md:pl-[64px]">
-          {item.a}
+        <div className="min-h-0 overflow-hidden">
+          <div className="max-w-[62ch] pb-8 pl-0 text-[16px] leading-[1.65] text-ink-2 md:pl-[64px]">
+            {item.a}
+          </div>
         </div>
       </div>
-    </Reveal>
+    </div>
   );
 }
 
-export default function Faq() {
+export default function Faq({
+  items: dbItems = [],
+  content = {},
+}: {
+  items?: FaqItem[];
+  content?: LocalizedRecord;
+}) {
   const t = useTranslations('faq');
-  const items = t.raw('items') as QA[];
+  const fallbackItems = t.raw('items') as QA[];
+  const items =
+    dbItems.length > 0
+      ? dbItems.map((item, index) => ({
+          n: String(index + 1).padStart(2, '0'),
+          q: item.question,
+          a: item.answer,
+        }))
+      : fallbackItems;
   const [openIdx, setOpenIdx] = useState<number | null>(null);
 
   return (
@@ -70,7 +75,7 @@ export default function Faq() {
             {t('eyebrow')}
           </Reveal>
           <Reveal as="h2" i={1} className="display-title col-span-12 md:col-span-8 md:col-start-1 md:row-start-2">
-            {t('titleBefore')} <span className="mark">{t('titleMark')}</span>
+            {content['faq.title'] || t('titleBefore')} {!content['faq.title'] ? <span className="mark">{t('titleMark')}</span> : null}
           </Reveal>
         </header>
 
@@ -80,7 +85,6 @@ export default function Faq() {
               <QAItem
                 key={it.n}
                 item={it}
-                i={idx}
                 open={openIdx === idx}
                 onToggle={() => setOpenIdx(openIdx === idx ? null : idx)}
               />

@@ -28,6 +28,17 @@ export default function Reveal({
       el.classList.add('in');
       return;
     }
+    // элемент уже в зоне видимости или прокручен выше — показать без задержки
+    const rect = el.getBoundingClientRect();
+    const vh = window.innerHeight;
+    if (rect.top < vh * 0.9) {
+      el.classList.add('in');
+      return;
+    }
+    if (typeof IntersectionObserver === 'undefined') {
+      el.classList.add('in');
+      return;
+    }
     const io = new IntersectionObserver(
       (entries) => {
         for (const en of entries) {
@@ -40,11 +51,7 @@ export default function Reveal({
       { threshold: 0.12, rootMargin: '0px 0px -10% 0px' }
     );
     io.observe(el);
-    const t = setTimeout(() => el.classList.add('in'), 1800);
-    return () => {
-      io.disconnect();
-      clearTimeout(t);
-    };
+    return () => io.disconnect();
   }, []);
 
   const Tag = as as 'div';
