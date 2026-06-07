@@ -389,7 +389,7 @@ values
   ('contact.phone_display', jsonb_build_object('uk', '+380 (97) 969 04 03', 'ru', '+380 (97) 969 04 03'), now()),
   ('contact.email', jsonb_build_object('uk', 'eurocomfortbc@gmail.com', 'ru', 'eurocomfortbc@gmail.com'), now()),
   ('contact.work_region', jsonb_build_object('uk', 'Біла Церква, Київ та Київська область', 'ru', 'Белая Церковь, Киев и Киевская область'), now()),
-  ('seo.domain', jsonb_build_object('uk', 'eurocomfort.kiev.ua', 'ru', 'eurocomfort.kiev.ua'), now())
+  ('seo.domain', jsonb_build_object('uk', 'https://eurocomfort.vercel.app/', 'ru', 'https://eurocomfort.vercel.app/'), now())
 on conflict (key) do update set
   value = excluded.value,
   updated_at = now();

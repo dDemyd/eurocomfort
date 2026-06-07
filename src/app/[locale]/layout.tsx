@@ -6,7 +6,7 @@ import { notFound } from 'next/navigation';
 import { fontVariables } from '@/app/fonts';
 import { routing, type Locale } from '@/i18n/routing';
 
-const siteUrl = 'https://eurocomfort.kiev.ua';
+const siteUrl = 'https://https://eurocomfort.vercel.app/';
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));

@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next';
 
-const siteUrl = 'https://eurocomfort.kiev.ua';
+const siteUrl = 'https://https://eurocomfort.vercel.app/';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
