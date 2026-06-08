@@ -6,7 +6,7 @@ import Image from 'next/image';
 import MobileNav from './MobileNav';
 import type { LocalizedRecord } from '@/lib/queries';
 
-const sectionIds = ['catalog', 'about', 'reviews', 'process', 'contact'];
+const sectionIds = ['catalog', 'about', 'reviews', 'process', 'contact', 'footer'];
 
 export default function SiteHeader({ settings = {} }: { settings?: LocalizedRecord }) {
   const t = useTranslations('header');
@@ -76,7 +76,7 @@ export default function SiteHeader({ settings = {} }: { settings?: LocalizedReco
     { href: '#about', id: 'about', label: t('nav.about') },
     { href: '#reviews', id: 'reviews', label: t('nav.reviews') },
     { href: '#process', id: 'process', label: t('nav.process') },
-    { href: '#contact', id: 'contact', label: t('nav.contact') },
+    { href: '#footer', id: 'footer', label: t('nav.contact') },
   ];
 
   return (
@@ -125,6 +125,14 @@ export default function SiteHeader({ settings = {} }: { settings?: LocalizedReco
           className="hidden whitespace-nowrap border-l border-hair-d pl-[26px] font-mono text-[12px] tracking-[0.06em] text-white lg:inline-block"
         >
           {phonePrefix || t('phonePrefix')} <b className="font-medium text-brand">{phoneRest || t('phoneRest')}</b>
+        </a>
+
+        <a
+          href="#contact"
+          onClick={() => setActiveSection('contact')}
+          className="hidden min-h-11 items-center justify-center bg-brand px-5 font-mono text-[11px] uppercase tracking-[0.16em] text-white transition-colors duration-200 ease-ease hover:bg-[#B5141F] xl:inline-flex"
+        >
+          {t('cta')}
         </a>
 
         <button

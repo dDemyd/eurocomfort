@@ -133,6 +133,14 @@ export default function LeadForm({
     if (errors.phone) clearError('phone');
   };
 
+  const onPhoneFocus = () => {
+    if (!phone) setPhone('+380');
+  };
+
+  const onPhoneBlur = () => {
+    if (phone === '+380') setPhone('');
+  };
+
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (status === 'loading') return;
@@ -188,7 +196,14 @@ export default function LeadForm({
         return;
       }
       if (!res.ok) {
-        setServerError(t('errors.server'));
+        const json = (await res.json().catch(() => null)) as
+          | { error?: string }
+          | null;
+        setServerError(
+          json?.error === 'telegram_failed'
+            ? t('errors.telegram')
+            : t('errors.server')
+        );
         setStatus('error');
         return;
       }
@@ -290,7 +305,9 @@ export default function LeadForm({
                 aria-required="true"
                 placeholder="+380 (__) ___ __ __"
                 value={phone}
+                onFocus={onPhoneFocus}
                 onChange={onPhoneChange}
+                onBlur={onPhoneBlur}
                 maxLength={32}
                 className={inputBase}
               />

@@ -98,7 +98,7 @@ export async function POST(req: Request) {
     );
   }
 
-  // Уведомления — параллельно, не валим запрос если что-то отвалилось.
+  // Telegram is required: if the bot notification fails, the form must not show success.
   const lines = [
     `<b>Нова заявка</b>`,
     `Тел: ${phone}`,
@@ -125,13 +125,24 @@ export async function POST(req: Request) {
     (input.comment ? `\nКомментарий:\n${input.comment}\n` : '') +
     (input.locale ? `Язык: ${input.locale}\n` : '');
 
-  await Promise.allSettled([
-    sendTelegram(tgText),
-    sendResendEmail({
-      subject: `Заявка с сайта · ${phone}`,
-      text: emailText,
-    }),
-  ]);
+  const telegramResult = await sendTelegram(tgText).catch((error) => {
+    console.error('[telegram] request failed', error);
+    return { ok: false as const, error: 'request_failed' };
+  });
+  if (!telegramResult?.ok) {
+    console.error('[lead] telegram notification failed', telegramResult);
+    return NextResponse.json(
+      { ok: false, error: 'telegram_failed', id: dbRow?.id ?? null },
+      { status: 502 }
+    );
+  }
+
+  await sendResendEmail({
+    subject: `Заявка с сайта · ${phone}`,
+    text: emailText,
+  }).catch((error) => {
+    console.error('[resend] request failed', error);
+  });
 
   return NextResponse.json({ ok: true, id: dbRow?.id ?? null });
 }
