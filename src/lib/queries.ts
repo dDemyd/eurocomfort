@@ -190,3 +190,18 @@ export async function getLandingData(locale: Locale) {
 
   return { categories, projects, testimonials, faq, content, settings };
 }
+
+export async function getCategoryData(locale: Locale, slug: string) {
+  const [categories, projects, content, settings] = await Promise.all([
+    getCategories(locale),
+    getProjects(locale),
+    getContentBlocks(locale),
+    getSettings(locale),
+  ]);
+  const category = categories.find((item) => item.slug === slug) ?? null;
+  const categoryProjects = category
+    ? projects.filter((project) => project.categoryId === category.id)
+    : [];
+
+  return { categories, category, projects: categoryProjects, content, settings };
+}

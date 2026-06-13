@@ -1,0 +1,326 @@
+/* ============================================================
+   ЄВРО КОМФОРТ — СТОРІНКА КАТЕГОРІЇ (технічна монографія системи)
+   Dark-dominant. Reuses styles.css tokens / components.
+   ============================================================ */
+body.cat-page{ background:var(--black); color:#fff }
+body.cat-page .siteheader{ background:transparent }
+body.cat-page .siteheader.scrolled{ background:rgba(10,10,10,.9); backdrop-filter:blur(10px); border-bottom-color:var(--hair-d) }
+
+/* tonal section variants */
+.s-lift{ background:#101010 }
+.s-base{ background:var(--black) }
+
+/* ---------- left category rail ---------- */
+.catrail{ position:fixed; left:18px; top:50%; transform:translateY(-50%); z-index:50;
+  display:flex; flex-direction:column; gap:2px }
+.catrail__line{ position:absolute; left:13px; top:6px; bottom:6px; width:1px; background:var(--hair-d) }
+.catrail__item{ position:relative; display:flex; align-items:center; gap:0; min-width:72px; padding:11px 0; color:rgba(255,255,255,.5) }
+.catrail__dot{ width:27px; flex:none; text-align:center; font-family:var(--ff-mono); font-size:12px; letter-spacing:.04em;
+  padding:4px 0; position:relative; z-index:2; transition:color .25s var(--ease), background .25s var(--ease) }
+.catrail__name{ font-family:var(--ff-mono); font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; white-space:nowrap;
+  margin-left:10px; padding:8px 12px; max-width:0; overflow:hidden; opacity:0; transform:translateX(-6px);
+  color:#fff; border:1px solid rgba(255,255,255,.13); background:linear-gradient(135deg, rgba(20,20,20,.78), rgba(10,10,10,.48));
+  box-shadow:0 14px 34px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.08);
+  backdrop-filter:blur(14px) saturate(1.35); -webkit-backdrop-filter:blur(14px) saturate(1.35);
+  transition:max-width .35s var(--ease), opacity .3s var(--ease), transform .35s var(--ease), border-color .25s var(--ease) }
+.catrail__item:hover .catrail__name{ max-width:220px; opacity:1; transform:none }
+.catrail__item:hover .catrail__name{ border-color:rgba(225,29,42,.38) }
+.catrail__item:hover .catrail__dot{ color:#fff }
+.catrail__item.current{ color:#fff }
+.catrail__item.current .catrail__dot{ color:#fff; background:var(--red) }
+@media(max-width:1199px){ .catrail{ display:none } }
+
+/* ============================================================
+   1 — CATEGORY HERO
+   ============================================================ */
+.cathero{ position:relative; min-height:clamp(600px,90vh,900px); background:#0a0a0a; overflow:hidden; display:flex }
+.cathero__bg{ position:absolute; inset:0; z-index:0 }
+.cathero__bg img{ width:100%; height:100%; object-fit:cover; filter:grayscale(1) contrast(1.12) brightness(.86) }
+.cathero__scrim{ position:absolute; inset:0; z-index:1; pointer-events:none; background:
+  linear-gradient(90deg, rgba(8,8,8,.95) 0%, rgba(8,8,8,.74) 36%, rgba(8,8,8,.3) 70%, rgba(8,8,8,.55) 100%),
+  linear-gradient(0deg, rgba(8,8,8,.96) 0%, rgba(8,8,8,0) 52%) }
+.cathero__corner{ position:absolute; inset:18px; z-index:4; pointer-events:none }
+.cathero .cmark{ width:30px; height:30px }
+.cathero__inner{ position:relative; z-index:5; width:100%; max-width:var(--maxw); margin:0 auto;
+  padding:140px var(--gutter) clamp(48px,7vh,90px); align-self:flex-end }
+.cathero__index{ font-family:var(--ff-mono); font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--red);
+  display:flex; align-items:center; gap:14px; margin-bottom:22px }
+.cathero__index::before{ content:""; width:40px; height:1px; background:var(--red) }
+.crumbs{ font-family:var(--ff-mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase;
+  color:rgba(255,255,255,.55); display:flex; align-items:center; gap:11px; flex-wrap:wrap; margin-bottom:clamp(26px,5vh,52px) }
+.crumbs a{ color:rgba(255,255,255,.55); transition:color .2s var(--ease) }
+.crumbs a:hover{ color:#fff }
+.crumbs .sep{ color:rgba(255,255,255,.28) }
+.crumbs .cur{ color:#fff }
+.cathero h1{ font-family:var(--ff-display); font-weight:900; text-transform:uppercase;
+  font-size:clamp(2.8rem,9vw,8rem); line-height:.88; letter-spacing:-.045em; max-width:13ch;
+  text-shadow:0 2px 30px rgba(0,0,0,.4) }
+.cathero__desc{ font-family:var(--ff-body); font-weight:300; font-size:clamp(16px,1.5vw,21px); line-height:1.5;
+  color:rgba(255,255,255,.85); max-width:46ch; margin-top:28px }
+.cathero__chips{ display:flex; flex-wrap:wrap; gap:12px; margin-top:34px }
+.chip{ display:inline-flex; align-items:center; gap:10px; border:1px solid var(--hair-d); background:rgba(10,10,10,.4);
+  backdrop-filter:blur(4px); padding:12px 18px; font-family:var(--ff-mono); font-size:11.5px; letter-spacing:.12em;
+  text-transform:uppercase; color:rgba(255,255,255,.82) }
+.chip::before{ content:""; width:7px; height:7px; background:var(--red); flex:none; box-shadow:0 0 9px rgba(225,29,42,.55) }
+.cathero__cta{ margin-top:38px }
+@media(max-width:600px){ .cathero__inner{ padding-top:116px } }
+
+/* ============================================================
+   section header (reuses .eyebrow / .title from styles.css)
+   ============================================================ */
+.csec{ padding-block:clamp(90px,13vh,170px) }
+.csec .shead .eyebrow{ color:rgba(255,255,255,.6) }
+.csec .shead .title{ color:#fff }
+.csec .shead .lede{ color:rgba(255,255,255,.66) }
+
+/* ============================================================
+   2 — POSITIONING (editorial 2-col)
+   ============================================================ */
+.catpos__grid{ display:grid; grid-template-columns:repeat(12,1fr); gap:0 24px; align-items:start }
+.catpos__claim{ grid-column:1/7; font-family:var(--ff-display); font-weight:800; text-transform:uppercase;
+  font-size:clamp(1.7rem,3.6vw,3.1rem); line-height:1.02; letter-spacing:-.03em }
+.catpos__claim .mark{ color:var(--red) }
+.catpos__body{ grid-column:8/13; display:flex; flex-direction:column; gap:20px }
+.catpos__body p{ font-size:16.5px; line-height:1.62; color:rgba(255,255,255,.72) }
+.catpos__body p b{ color:#fff; font-weight:500 }
+@media(max-width:860px){ .catpos__claim{ grid-column:1/13 } .catpos__body{ grid-column:1/13; margin-top:34px } }
+
+/* ---- editorial scatter: claim + free-floating icon facts, full-height ---- */
+.aboutsys{ position:relative; display:grid; grid-template-columns:repeat(12,1fr);
+  column-gap:clamp(20px,3.5vw,56px); row-gap:clamp(60px,11vh,150px);
+  align-content:space-between; min-height:clamp(640px,84vh,920px) }
+.aboutsys__lead{ grid-column:1/7; grid-row:1; display:flex; flex-direction:column }
+.aboutsys__claim{ font-family:var(--ff-display); font-weight:800; text-transform:uppercase;
+  font-size:clamp(1.9rem,4.2vw,3.5rem); line-height:1; letter-spacing:-.03em; margin:14px 0 30px; text-wrap:balance }
+.aboutsys__claim .mark{ color:var(--red) }
+.aboutsys__intro{ display:flex; flex-direction:column; gap:18px; max-width:50ch }
+.aboutsys__intro p{ font-size:16.5px; line-height:1.62; color:rgba(255,255,255,.72) }
+.aboutsys__intro p b{ color:#fff; font-weight:500 }
+.aboutsys__apps{ grid-column:1/7; grid-row:3; display:flex; flex-direction:column; gap:10px; align-self:end }
+.aboutsys__apps .k{ font-family:var(--ff-mono); font-size:10.5px; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.5) }
+.aboutsys__apps .v{ font-family:var(--ff-display); font-weight:500; letter-spacing:-.01em; font-size:clamp(15px,1.4vw,19px); color:#fff }
+
+/* free-floating fact: just a bigger scattered icon + calm heading.
+   No card, no number, no background, no description — only the icon
+   takes the red accent on hover/focus. */
+.apoint{ display:flex; flex-direction:column; gap:clamp(18px,1.8vw,26px); max-width:24ch }
+.apoint__ic{ display:inline-flex; color:rgba(255,255,255,.62);
+  transition:color .4s var(--ease,ease), transform .5s var(--ease,ease) }
+.apoint__ic svg{ display:block; width:clamp(60px,5.6vw,88px); height:auto }
+.apoint h3{ font-family:var(--ff-display); font-weight:700; text-transform:uppercase; letter-spacing:-.015em;
+  font-size:clamp(1.3rem,2.1vw,1.85rem); line-height:1.0; margin:0; color:#fff; text-wrap:balance }
+.apoint:hover .apoint__ic, .apoint:focus-within .apoint__ic{ color:var(--red) }
+
+/* vertical zigzag: the three facts read as ONE stacked block on the
+   right of the claim — first left, second right, third left — top to
+   bottom across the full height. Same on every category page. */
+.apoint--a{ grid-column:7/13; grid-row:1; justify-self:start; align-self:start }
+.apoint--a .apoint__ic{ transform:translateX(6px) rotate(-5deg) }
+.apoint--b{ grid-column:7/13; grid-row:2; justify-self:end; align-self:center;
+  align-items:flex-end; text-align:right }
+.apoint--b .apoint__ic{ transform:translateX(-6px) rotate(5deg) }
+.apoint--c{ grid-column:7/13; grid-row:3; justify-self:start; align-self:end }
+.apoint--c .apoint__ic{ transform:translateX(8px) rotate(-6deg) }
+.apoint:hover .apoint__ic, .apoint:focus-within .apoint__ic{ transform:translateX(0) rotate(0deg) }
+
+@media(max-width:860px){
+  .aboutsys{ display:flex; flex-direction:column; gap:clamp(44px,8vw,66px); min-height:0 }
+  .apoint{ max-width:none }
+  .apoint--b{ align-items:flex-start; text-align:left }
+  .apoint__ic{ transform:none !important }
+}
+
+/* ============================================================
+   3 — ANATOMY (line-art datasheet diagram)
+   ============================================================ */
+.anatomy__stage{ position:relative; border:1px solid var(--hair-d); background:
+  radial-gradient(120% 90% at 50% 12%, #131313 0%, #0c0c0c 60%, #0a0a0a 100%);
+  padding:clamp(20px,3vw,40px) }
+.anatomy__stage .cmark{ width:26px; height:26px }
+.anatomy__tag{ position:absolute; left:24px; top:20px; font-family:var(--ff-mono); font-size:10.5px;
+  letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.4) }
+.anatomy__tag.r{ left:auto; right:24px; color:var(--red) }
+.anatomy svg{ display:block; width:100%; height:auto }
+.anatomy svg text{ font-family:var(--ff-mono) }
+.an-sec{ fill:none; stroke:rgba(255,255,255,.55); stroke-width:1.4 }
+.an-thin{ fill:none; stroke:rgba(255,255,255,.22); stroke-width:1 }
+.an-glass{ fill:rgba(255,255,255,.07); stroke:rgba(255,255,255,.6); stroke-width:1.4 }
+.an-fill{ fill:rgba(255,255,255,.06) }
+.an-lead{ fill:none; stroke:var(--red); stroke-width:1.1 }
+.an-dot{ fill:var(--red) }
+.an-lbl{ fill:#fff; font-size:15px; letter-spacing:.12em; text-transform:uppercase; font-weight:500 }
+.an-idx{ fill:var(--red); font-size:13px; letter-spacing:.1em }
+.an-sub{ fill:rgba(255,255,255,.5); font-size:12px; letter-spacing:.02em }
+.an-floor{ stroke:rgba(255,255,255,.3); stroke-width:1.4 }
+.an-hatch{ stroke:rgba(255,255,255,.28); stroke-width:1 }
+.an-amb{ fill:rgba(255,255,255,.42); font-size:11px; letter-spacing:.22em }
+.anatomy__note{ margin-top:26px; display:grid; grid-template-columns:repeat(3,1fr); gap:18px 28px }
+.anatomy__note div{ font-family:var(--ff-body); font-weight:300; font-size:14px; color:rgba(255,255,255,.6); line-height:1.5;
+  padding-left:16px; border-left:1px solid var(--hair-d) }
+.anatomy__note b{ display:block; font-family:var(--ff-mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:#fff; margin-bottom:6px }
+@media(max-width:760px){ .anatomy__note{ grid-template-columns:1fr } }
+
+/* ============================================================
+   4 — SPECS (datasheet)
+   ============================================================ */
+.specs__grid{ display:grid; grid-template-columns:1fr 1fr; gap:0 clamp(40px,5vw,80px) }
+.spec-col{ border-top:1px solid var(--hair-d) }
+.specrow{ display:grid; grid-template-columns:1fr auto; gap:20px; align-items:baseline; padding:22px 0; border-bottom:1px solid var(--hair-d) }
+.specrow .k{ font-family:var(--ff-mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:rgba(255,255,255,.5) }
+.specrow .v{ font-family:var(--ff-display); font-weight:500; font-size:clamp(15px,1.2vw,18px); letter-spacing:-.01em; text-align:right; color:#fff; font-variant-numeric:tabular-nums }
+.specrow .v small{ font-family:var(--ff-body); font-weight:300; color:rgba(255,255,255,.55); font-size:13px }
+@media(max-width:860px){ .specs__grid{ grid-template-columns:1fr } .spec-col+.spec-col{ border-top:0 } }
+.specs__note{ margin-top:20px; font-family:var(--ff-mono); font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:rgba(255,255,255,.38) }
+
+/* ============================================================
+   5/6/9 — tile grids (reuse .tiles/.tile from styles.css)
+   ============================================================ */
+.grid-3{ grid-column:1/13; display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--hair-d); border:1px solid var(--hair-d) }
+.grid-3 .tile{ aspect-ratio:4/5 }
+.catprojects{ grid-column:1/13; display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--hair-d); border:1px solid var(--hair-d) }
+.catprojects .tile{ aspect-ratio:1/1 }
+.catprojects .tile.span2{ grid-column:span 2; aspect-ratio:auto }
+@media(max-width:900px){ .grid-3, .catprojects{ grid-template-columns:1fr } .grid-3 .tile,.catprojects .tile,.catprojects .tile.span2{ aspect-ratio:4/3; grid-column:auto } }
+
+/* ============================================================
+   8 — CTA form (reuses .field from styles.css)
+   ============================================================ */
+.catform__grid{ display:grid; grid-template-columns:repeat(12,1fr); gap:0 24px }
+.catform__l{ grid-column:1/5 }
+.catform__l .title{ color:#fff; font-size:clamp(2rem,4vw,3.4rem) }
+.catform__contacts{ margin-top:38px; display:flex; flex-direction:column; gap:20px }
+.catform__contacts .fc .k{ font-family:var(--ff-mono); font-size:10.5px; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.5) }
+.catform__contacts .fc{ display:flex; flex-direction:column; gap:5px }
+.catform__contacts .fc .v{ font-size:18px; color:#fff }
+.catform__contacts .fc .v b{ color:var(--red); font-weight:400 }
+.catform__r{ grid-column:6/13 }
+.catform .form{ grid-template-columns:1fr 1fr }
+@media(max-width:860px){ .catform__l{ grid-column:1/13 } .catform__r{ grid-column:1/13; margin-top:40px } }
+
+/* ============================================================
+   7 — FAQ on dark (overrides of light .faq from styles.css)
+   ============================================================ */
+.cat-page .faq{ border-top-color:var(--hair-d) }
+.cat-page .qa{ border-bottom-color:var(--hair-d) }
+.cat-page .qa__q .pm::before, .cat-page .qa__q .pm::after{ background:#fff }
+.cat-page .qa.open .pm::before{ background:var(--red) }
+.cat-page .qa__a-inner{ color:rgba(255,255,255,.68) }
+
+/* ============================================================
+   9 — other systems heading helper
+   ============================================================ */
+.others .tile__cap h3{ font-size:clamp(1.3rem,2vw,1.9rem) }
+
+/* anatomy: svg labels are unreadable at phone scale — hide them,
+   the numbered legend below carries the data */
+@media(max-width:700px){
+  .anatomy svg .an-side{ display:none }
+  .anatomy__note{ grid-template-columns:1fr; gap:14px }
+}
+@media(max-width:760px){ .anatomy__note{ grid-template-columns:1fr } }
+.anatomy__note b i{ font-style:normal; color:var(--red); margin-right:8px }
+
+/* ============================================================
+   5 — VARIANTS · interactive profile selector
+   (technical readout, deliberately unlike the photo-tile grids)
+   ============================================================ */
+.vconf{ display:grid; grid-template-columns:1.34fr .66fr; gap:24px; align-items:stretch }
+@media(max-width:980px){ .vconf{ grid-template-columns:1fr; gap:16px } }
+
+/* ---- left stage: photo + datasheet readout ---- */
+.vconf__stage{ position:relative; border:1px solid var(--hair-d); background:#0c0c0c;
+  display:flex; flex-direction:column; min-height:540px; overflow:hidden }
+.vconf__stage .cmark{ width:24px; height:24px; z-index:6 }
+.vconf__photos{ position:relative; flex:1 1 auto; min-height:300px; overflow:hidden }
+.vconf__photo{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  opacity:0; transform:scale(1.045); filter:grayscale(.28) contrast(1.06);
+  transition:opacity .6s var(--ease), transform 1.2s var(--ease) }
+.vconf__photo.is-active{ opacity:1; transform:none }
+.vconf__photos::after{ content:""; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(0deg,#0c0c0c 0%, rgba(12,12,12,0) 34%) }
+.vconf__plan{ position:absolute; left:16px; top:14px; z-index:5;
+  font-family:var(--ff-mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase;
+  color:rgba(255,255,255,.62); background:rgba(8,8,8,.42); backdrop-filter:blur(3px); padding:6px 10px }
+
+/* readout strip */
+.vconf__read{ position:relative; z-index:2; display:grid; grid-template-columns:auto 1fr; gap:26px; align-items:center;
+  padding:22px 26px 26px; border-top:1px solid var(--hair-d);
+  background:radial-gradient(130% 150% at 14% 0%, #151515 0%, #0c0c0c 70%) }
+.vconf__schem{ position:relative; width:236px; height:126px; flex:none }
+.vschem{ position:absolute; inset:0; width:100%; height:100%; opacity:0; transition:opacity .45s var(--ease) }
+.vschem.is-active{ opacity:1 }
+.vschem text{ font-family:var(--ff-mono) }
+.vschem .amb{ fill:rgba(255,255,255,.46); font-size:11px; letter-spacing:.15em }
+.vschem .dim{ fill:var(--red); font-size:12px; letter-spacing:.05em }
+.vconf__cap{ position:relative; min-height:120px }
+.vcap{ position:absolute; inset:0; opacity:0; transform:translateY(7px);
+  transition:opacity .45s var(--ease), transform .45s var(--ease); pointer-events:none }
+.vcap.is-active{ opacity:1; transform:none; pointer-events:auto }
+.vcap__n{ font-family:var(--ff-mono); font-size:10.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--red) }
+.vcap h3{ font-family:var(--ff-display); font-weight:800; text-transform:uppercase; letter-spacing:-.02em;
+  font-size:clamp(1.4rem,2.2vw,2rem); line-height:1; margin:9px 0 11px }
+.vcap p{ font-family:var(--ff-body); font-weight:300; font-size:14.5px; line-height:1.55; color:rgba(255,255,255,.64); max-width:44ch }
+@media(max-width:560px){ .vconf__read{ grid-template-columns:1fr; gap:16px } .vconf__schem{ width:100%; max-width:240px } .vconf__cap{ min-height:140px } }
+
+/* ---- right list: selectable rows ---- */
+.vconf__list{ display:flex; flex-direction:column; border:1px solid var(--hair-d); background:#0c0c0c }
+.vrow{ position:relative; flex:1 1 0; min-height:96px; display:flex; align-items:center; gap:18px; width:100%; text-align:left;
+  padding:22px; border-bottom:1px solid var(--hair-d); color:#fff; transition:background .25s var(--ease) }
+.vrow::before{ content:""; position:absolute; left:0; top:0; bottom:0; width:2px; background:var(--red);
+  transform:scaleY(0); transform-origin:top; transition:transform .3s var(--ease) }
+.vrow:hover{ background:#131313 }
+.vrow.is-active{ background:#151515 }
+.vrow.is-active::before{ transform:scaleY(1) }
+.vrow__idx{ font-family:var(--ff-mono); font-size:12px; letter-spacing:.1em; color:rgba(255,255,255,.42); flex:none; transition:color .25s var(--ease) }
+.vrow.is-active .vrow__idx{ color:var(--red) }
+.vrow__main{ display:flex; flex-direction:column; gap:6px; flex:1 1 auto }
+.vrow__name{ font-family:var(--ff-display); font-weight:700; text-transform:uppercase; letter-spacing:-.01em;
+  font-size:clamp(1.05rem,1.5vw,1.3rem); line-height:1.05 }
+.vrow__spec{ font-family:var(--ff-mono); font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.52) }
+.vrow__arr{ font-family:var(--ff-mono); color:rgba(255,255,255,.3); flex:none; transition:transform .25s var(--ease), color .25s var(--ease) }
+.vrow:hover .vrow__arr, .vrow.is-active .vrow__arr{ color:var(--red); transform:translateX(4px) }
+.vconf__cta{ flex:none; display:flex; align-items:center; justify-content:space-between; gap:14px;
+  padding:22px; background:var(--red); color:#fff; font-family:var(--ff-mono); font-size:11.5px;
+  letter-spacing:.14em; text-transform:uppercase; transition:background .25s var(--ease) }
+.vconf__cta:hover{ background:var(--red-dk) }
+.vconf__cta .arr{ display:inline-block; transition:transform .25s var(--ease) }
+.vconf__cta:hover .arr{ transform:translateX(5px) }
+
+/* Next port overrides */
+.aboutsys{
+  grid-template-columns:minmax(0,7fr) minmax(250px,3fr);
+  grid-template-rows:auto auto;
+  column-gap:clamp(34px,5vw,78px);
+  row-gap:clamp(18px,2.2vw,26px);
+  align-items:start;
+  min-height:0;
+}
+.aboutsys__lead{ grid-column:1; grid-row:1 }
+.aboutsys__apps{ grid-column:1; grid-row:2; margin-top:0 }
+.aboutsys__apps .k{ color:var(--red) }
+.apoint{ max-width:none; gap:clamp(12px,1.2vw,18px) }
+.apoint__ic svg{ width:clamp(42px,3.8vw,58px) }
+.apoint h3{ font-size:clamp(1rem,1.45vw,1.32rem); line-height:1.05 }
+.apoint--a{ grid-column:2; grid-row:1; justify-self:start; align-self:start }
+.apoint--b{ grid-column:2; grid-row:1 / 3; justify-self:end; align-self:center }
+.apoint--c{ grid-column:2; grid-row:2; justify-self:start; align-self:end }
+@media(max-width:860px){
+  .aboutsys{ display:flex; flex-direction:column; gap:clamp(34px,7vw,54px) }
+  .aboutsys__apps{ order:2 }
+  .apoint{ order:3 }
+  .apoint--b{ align-items:flex-start; text-align:left }
+}
+.apoint__ic{
+  animation:catIconPulse 3.4s var(--ease) infinite;
+  will-change:transform,color,filter;
+}
+.apoint--b .apoint__ic{ animation-delay:.45s }
+.apoint--c .apoint__ic{ animation-delay:.9s }
+@keyframes catIconPulse{
+  0%,100%{ color:rgba(255,255,255,.62); filter:none }
+  45%{ color:var(--red); filter:drop-shadow(0 0 12px rgba(225,29,42,.26)) }
+  58%{ color:rgba(255,255,255,.78) }
+}
+@media (prefers-reduced-motion: reduce){
+  .apoint__ic{ animation:none }
+}

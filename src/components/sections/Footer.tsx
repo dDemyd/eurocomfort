@@ -1,6 +1,7 @@
 import Image from 'next/image';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import Reveal from '../Reveal';
+import { getCatalogHrefByIndex } from '@/lib/catalogPages';
 import type { Category, LocalizedRecord } from '@/lib/queries';
 
 type Nav = { label: string; href: string };
@@ -8,14 +9,33 @@ type Nav = { label: string; href: string };
 export default function Footer({
   categories = [],
   settings = {},
+  variant = 'home',
 }: {
   categories?: Category[];
   settings?: LocalizedRecord;
+  variant?: 'home' | 'category';
 }) {
   const t = useTranslations('footer');
   const tCommon = useTranslations('common');
-  const navLinks = t.raw('navLinks') as Nav[];
-  const catalogLinks = categories.length > 0 ? categories.map((category) => category.title) : t.raw('catalogLinks') as string[];
+  const locale = useLocale();
+  const navLinks = variant === 'category'
+    ? [
+        { label: t('colCatalog'), href: '#top' },
+        { label: locale === 'ru' ? 'О системе' : 'Про систему', href: '#about-system' },
+        { label: locale === 'ru' ? 'Характеристики' : 'Характеристики', href: '#specs' },
+        { label: locale === 'ru' ? 'Проекты' : 'Проєкти', href: '#projects' },
+        { label: t('colContacts'), href: '#contact' },
+      ]
+    : t.raw('navLinks') as Nav[];
+  const catalogLinks = categories.length > 0
+    ? categories.map((category, index) => ({
+        label: category.title,
+        href: getCatalogHrefByIndex(index, locale),
+      }))
+    : (t.raw('catalogLinks') as string[]).map((label, index) => ({
+        label,
+        href: getCatalogHrefByIndex(index, locale),
+      }));
   const phone = settings['contact.phone_display'] || t('phoneFull');
   const email = settings['contact.email'] || t('emailFull');
   const address = settings['contact.address'] || t('addressFull');
@@ -118,13 +138,13 @@ export default function Footer({
               {t('colCatalog')}
             </h4>
             <ul className="flex flex-col gap-3">
-              {catalogLinks.map((l) => (
-                <li key={l}>
+              {catalogLinks.map((link) => (
+                <li key={link.href}>
                   <a
-                    href="#catalog"
+                    href={link.href}
                     className="text-[15px] text-white/80 transition-colors hover:text-brand"
                   >
-                    {l}
+                    {link.label}
                   </a>
                 </li>
               ))}

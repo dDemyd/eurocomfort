@@ -7,7 +7,7 @@
    ============================================================ */
 :root {
   --ff-display: 'Inter Tight', sans-serif;
-  --ff-body: 'Jost', sans-serif;
+  --ff-body: 'Onest', sans-serif;
   --ff-mono: 'JetBrains Mono', monospace;
   --gutter: clamp(30px, 4.5vw, 72px);
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
