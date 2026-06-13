@@ -1,4 +1,4 @@
-import { Inter_Tight, Jost, JetBrains_Mono } from 'next/font/google';
+import { Inter_Tight, JetBrains_Mono, Onest } from 'next/font/google';
 
 export const display = Inter_Tight({
   subsets: ['latin', 'cyrillic'],
@@ -7,9 +7,9 @@ export const display = Inter_Tight({
   display: 'swap',
 });
 
-export const body = Jost({
+export const body = Onest({
   subsets: ['latin', 'cyrillic'],
-  weight: ['300', '400', '500'],
+  weight: ['300', '400', '500', '600'],
   variable: '--ff-body',
   display: 'swap',
 });

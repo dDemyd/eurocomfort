@@ -1,7 +1,8 @@
 import Image from 'next/image';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import Reveal from '../Reveal';
 import RichText from '../RichText';
+import { getCatalogHrefByIndex } from '@/lib/catalogPages';
 import type { Category, LocalizedRecord } from '@/lib/queries';
 
 type Tile = {
@@ -20,6 +21,7 @@ export default function Categories({
   content?: LocalizedRecord;
 }) {
   const t = useTranslations('categories');
+  const locale = useLocale();
   const fallbackTiles = t.raw('tiles') as Tile[];
   const tiles =
     categories.length > 0
@@ -68,7 +70,7 @@ export default function Categories({
               as="div"
               className="group relative block overflow-hidden bg-[#0d0d0d] aspect-[4/3] sm:aspect-[16/10]"
             >
-              <a href="#contact" className="absolute inset-0 block">
+              <a href={getCatalogHrefByIndex(idx, locale)} className="absolute inset-0 block">
                 <div className="absolute inset-0">
                   <Image
                     src={tile.image}
