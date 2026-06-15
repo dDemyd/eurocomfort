@@ -170,7 +170,7 @@
       <h2 class="title reveal" style="--i:1">Розріз вузла <span class="mark">стійки</span></h2>
       <p class="lede reveal" style="--i:2">Горизонтальний переріз стійко-ригельної системи: шість вузлів, які визначають тепло, герметичність та статику фасаду.</p>
     </header>
-    <div class="anatomy__stage reveal" style="--i:1">
+    <div class="anatomy__stage anatomy__stage--facade reveal" style="--i:1">
       <span class="cmark"></span><span class="cmark tr"></span><span class="cmark bl"></span><span class="cmark br"></span>
       <span class="anatomy__tag">Секція H–H · горизонтальний переріз стійки</span>
       <span class="anatomy__tag r">M 1:2</span>
@@ -257,47 +257,59 @@
 
         <!-- LABELS + LEADERS on right side -->
         <g class="an-side">
-          <!-- 03 Притискна планка -->
-          <rect class="an-dot" x="603" y="120" width="6" height="6"></rect>
-          <polyline class="an-lead" points="609,123 720,123 870,118"></polyline>
-          <text class="an-idx" x="886" y="114">03</text>
-          <text class="an-lbl" x="922" y="114">Притискна планка</text>
-          <text class="an-sub" x="922" y="136">декоративна накладка, фарбування RAL</text>
+          <!-- 01 Стійка / ригель -->
+          <g class="an-point">
+            <polyline class="an-lead" pathLength="1" points="612,388 770,388 770,114 870,114"></polyline>
+            <text class="an-idx" x="886" y="114">01</text>
+            <text class="an-lbl" x="922" y="114">Стійка / ригель</text>
+            <text class="an-sub" x="922" y="136">профіль Reynaers · Schüco · Aluprof</text>
+            <g class="an-bubble"><circle cx="612" cy="388" r="11"></circle><text x="612" y="388">01</text></g>
+          </g>
 
           <!-- 02 Склопакет -->
-          <rect class="an-dot" x="716" y="167" width="6" height="6"></rect>
-          <polyline class="an-lead" points="722,170 870,190"></polyline>
-          <text class="an-idx" x="886" y="186">02</text>
-          <text class="an-lbl" x="922" y="186">Склопакет</text>
-          <text class="an-sub" x="922" y="208">low-E / мультифункціональний, до 54 мм</text>
+          <g class="an-point">
+            <polyline class="an-lead" pathLength="1" points="719,170 800,170 800,186 870,186"></polyline>
+            <text class="an-idx" x="886" y="186">02</text>
+            <text class="an-lbl" x="922" y="186">Склопакет</text>
+            <text class="an-sub" x="922" y="208">low-E / мультифункціональний, до 54 мм</text>
+            <g class="an-bubble"><circle cx="719" cy="170" r="11"></circle><text x="719" y="170">02</text></g>
+          </g>
+
+          <!-- 03 Притискна планка -->
+          <g class="an-point">
+            <polyline class="an-lead" pathLength="1" points="606,123 740,123 740,246 870,246"></polyline>
+            <text class="an-idx" x="886" y="246">03</text>
+            <text class="an-lbl" x="922" y="246">Притискна планка</text>
+            <text class="an-sub" x="922" y="268">декоративна накладка, фарбування RAL</text>
+            <g class="an-bubble"><circle cx="606" cy="123" r="11"></circle><text x="606" y="123">03</text></g>
+          </g>
 
           <!-- 04 EPDM ущільнювачі -->
-          <rect class="an-dot" x="609" y="190" width="6" height="6"></rect>
-          <polyline class="an-lead" points="615,193 760,193 870,250"></polyline>
-          <text class="an-idx" x="886" y="246">04</text>
-          <text class="an-lbl" x="922" y="246">Ущільнювачі EPDM</text>
-          <text class="an-sub" x="922" y="268">зовнішній + внутрішній контур герметизації</text>
+          <g class="an-point">
+            <polyline class="an-lead" pathLength="1" points="612,193 760,193 760,311 870,311"></polyline>
+            <text class="an-idx" x="886" y="311">04</text>
+            <text class="an-lbl" x="922" y="311">Ущільнювачі EPDM</text>
+            <text class="an-sub" x="922" y="333">зовнішній + внутрішній контур герметизації</text>
+            <g class="an-bubble"><circle cx="612" cy="193" r="11"></circle><text x="612" y="193">04</text></g>
+          </g>
 
           <!-- 05 Термоміст -->
-          <rect class="an-dot" x="609" y="265" width="6" height="6"></rect>
-          <polyline class="an-lead" points="615,268 760,268 870,315"></polyline>
-          <text class="an-idx" x="886" y="311">05</text>
-          <text class="an-lbl" x="922" y="311">Термоміст</text>
-          <text class="an-sub" x="922" y="333">поліамідний міст — без містків холоду</text>
+          <g class="an-point">
+            <polyline class="an-lead" pathLength="1" points="612,268 780,268 780,408 870,408"></polyline>
+            <text class="an-idx" x="886" y="408">05</text>
+            <text class="an-lbl" x="922" y="408">Термоміст</text>
+            <text class="an-sub" x="922" y="430">поліамідний міст — без містків холоду</text>
+            <g class="an-bubble"><circle cx="612" cy="268" r="11"></circle><text x="612" y="268">05</text></g>
+          </g>
 
-          <!-- 01 Стійка / ригель — профіль -->
-          <rect class="an-dot" x="609" y="385" width="6" height="6"></rect>
-          <polyline class="an-lead" points="615,388 760,388 870,412"></polyline>
-          <text class="an-idx" x="886" y="408">01</text>
-          <text class="an-lbl" x="922" y="408">Стійка / ригель</text>
-          <text class="an-sub" x="922" y="430">профіль Reynaers · Schüco · Aluprof</text>
-
-          <!-- 06 Дренаж — водовідведення -->
-          <rect class="an-dot" x="547" y="460" width="6" height="6"></rect>
-          <polyline class="an-lead" points="553,463 730,463 870,495"></polyline>
-          <text class="an-idx" x="886" y="491">06</text>
-          <text class="an-lbl" x="922" y="491">Дренаж</text>
-          <text class="an-sub" x="922" y="513">водовідведення по периметру вузла</text>
+          <!-- 06 Дренаж -->
+          <g class="an-point">
+            <polyline class="an-lead" pathLength="1" points="550,463 730,463 870,491"></polyline>
+            <text class="an-idx" x="886" y="491">06</text>
+            <text class="an-lbl" x="922" y="491">Дренаж</text>
+            <text class="an-sub" x="922" y="513">водовідведення по периметру вузла</text>
+            <g class="an-bubble"><circle cx="550" cy="463" r="11"></circle><text x="550" y="463">06</text></g>
+          </g>
         </g>
       </svg>
     </div>
@@ -390,17 +402,14 @@
         <button class="vrow is-active" data-v="0" type="button" aria-pressed="true">
           <span class="vrow__idx">01</span>
           <span class="vrow__main"><span class="vrow__name">Стійко-ригельна</span><span class="vrow__spec">профіль 50–65 мм</span></span>
-          <span class="vrow__arr" aria-hidden="true">→</span>
         </button>
         <button class="vrow" data-v="1" type="button" aria-pressed="false">
           <span class="vrow__idx">02</span>
           <span class="vrow__main"><span class="vrow__name">Структурна</span><span class="vrow__spec">рама прихована зовні</span></span>
-          <span class="vrow__arr" aria-hidden="true">→</span>
         </button>
         <button class="vrow" data-v="2" type="button" aria-pressed="false">
           <span class="vrow__idx">03</span>
           <span class="vrow__main"><span class="vrow__name">Спайдерна</span><span class="vrow__spec">точкові кріплення</span></span>
-          <span class="vrow__arr" aria-hidden="true">→</span>
         </button>
         <a class="vconf__cta" href="#contact">Підібрати конфігурацію <span class="arr" aria-hidden="true">→</span></a>
       </div>
