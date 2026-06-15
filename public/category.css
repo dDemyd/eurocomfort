@@ -156,6 +156,16 @@ body.cat-page .siteheader.scrolled{ background:rgba(10,10,10,.9); backdrop-filte
 .anatomy__note b{ display:block; font-family:var(--ff-mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:#fff; margin-bottom:6px }
 @media(max-width:760px){ .anatomy__note{ grid-template-columns:1fr } }
 
+/* anatomy callouts: numbered bubble markers + hover-reveal */
+.an-point .an-lead{ stroke-dasharray:1 1; stroke-dashoffset:1; transition: stroke-dashoffset .6s ease }
+.an-point .an-sub{ opacity:0; transition: opacity .3s ease .35s }
+.anatomy__stage:hover .an-point .an-lead{ stroke-dashoffset:0 }
+.anatomy__stage:hover .an-point .an-sub{ opacity:1 }
+.anatomy__stage:hover .an-bubble circle{ fill:var(--red) }
+.anatomy__stage:hover .an-bubble text{ fill:#fff }
+.an-bubble circle{ fill:#0a0a0a; stroke:var(--red); stroke-width:1.4; transition: fill .25s ease }
+.an-bubble text{ fill:var(--red); font-family:var(--ff-mono); font-size:11px; letter-spacing:.05em; text-anchor:middle; dominant-baseline:central; pointer-events:none; transition: fill .25s ease }
+
 /* ============================================================
    4 — SPECS (datasheet)
    ============================================================ */
@@ -210,7 +220,18 @@ body.cat-page .siteheader.scrolled{ background:rgba(10,10,10,.9); backdrop-filte
 /* anatomy: svg labels are unreadable at phone scale — hide them,
    the numbered legend below carries the data */
 @media(max-width:700px){
-  .anatomy svg .an-side{ display:none }
+  .anatomy__stage { min-height:50vh; overflow:hidden; padding:46px 0 22px }
+  .anatomy__stage > svg{ width:200%; margin-left:-15%; height:auto; display:block }
+  .anatomy__stage--facade > svg{ margin-left:-35% }
+  .anatomy__stage--full > svg{ width:100%; margin-left:0 }
+  .anatomy__tag{ left:16px; top:16px; font-size:9.5px; letter-spacing:.16em; max-width:60%; line-height:1.5 }
+  .anatomy__tag.r{ display:none }
+  .anatomy svg .an-side .an-lead,
+  .anatomy svg .an-side .an-lbl,
+  .anatomy svg .an-side .an-idx,
+  .anatomy svg .an-side .an-sub{ display:none }
+  .an-bubble circle{ fill:var(--red) }
+  .an-bubble text{ fill:#fff }
   .anatomy__note{ grid-template-columns:1fr; gap:14px }
 }
 @media(max-width:760px){ .anatomy__note{ grid-template-columns:1fr } }
@@ -248,15 +269,15 @@ body.cat-page .siteheader.scrolled{ background:rgba(10,10,10,.9); backdrop-filte
 .vschem text{ font-family:var(--ff-mono) }
 .vschem .amb{ fill:rgba(255,255,255,.46); font-size:11px; letter-spacing:.15em }
 .vschem .dim{ fill:var(--red); font-size:12px; letter-spacing:.05em }
-.vconf__cap{ position:relative; min-height:120px }
-.vcap{ position:absolute; inset:0; opacity:0; transform:translateY(7px);
+.vconf__cap{ position:relative; display:grid }
+.vcap{ grid-area:1/1; opacity:0; transform:translateY(7px);
   transition:opacity .45s var(--ease), transform .45s var(--ease); pointer-events:none }
 .vcap.is-active{ opacity:1; transform:none; pointer-events:auto }
 .vcap__n{ font-family:var(--ff-mono); font-size:10.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--red) }
 .vcap h3{ font-family:var(--ff-display); font-weight:800; text-transform:uppercase; letter-spacing:-.02em;
   font-size:clamp(1.4rem,2.2vw,2rem); line-height:1; margin:9px 0 11px }
 .vcap p{ font-family:var(--ff-body); font-weight:300; font-size:14.5px; line-height:1.55; color:rgba(255,255,255,.64); max-width:44ch }
-@media(max-width:560px){ .vconf__read{ grid-template-columns:1fr; gap:16px } .vconf__schem{ width:100%; max-width:240px } .vconf__cap{ min-height:140px } }
+@media(max-width:560px){ .vconf__read{ grid-template-columns:1fr; gap:16px } .vconf__schem{ width:100%; max-width:240px } }
 
 /* ---- right list: selectable rows ---- */
 .vconf__list{ display:flex; flex-direction:column; border:1px solid var(--hair-d); background:#0c0c0c }

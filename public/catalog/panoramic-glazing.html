@@ -265,35 +265,45 @@
         <!-- leaders + labels -->
         <g class="an-side">
           <!-- 01 профіль -->
-          <rect class="an-dot" x="397" y="96" width="6" height="6"></rect>
-          <line class="an-lead" x1="403" y1="99" x2="620" y2="99"></line>
-          <text class="an-idx" x="636" y="95">01</text>
-          <text class="an-lbl" x="672" y="95">Алюмінієвий профіль</text>
-          <text class="an-sub" x="672" y="117">системи Reynaers / Schüco, фарбування RAL</text>
+          <g class="an-point">
+            <line class="an-lead" pathLength="1" x1="400" y1="99" x2="620" y2="99"></line>
+            <text class="an-idx" x="636" y="95">01</text>
+            <text class="an-lbl" x="672" y="95">Алюмінієвий профіль</text>
+            <text class="an-sub" x="672" y="117">системи Reynaers / Schüco, фарбування RAL</text>
+            <g class="an-bubble"><circle cx="400" cy="99" r="11"></circle><text x="400" y="99">01</text></g>
+          </g>
           <!-- 02 склопакет -->
-          <rect class="an-dot" x="367" y="207" width="6" height="6"></rect>
-          <line class="an-lead" x1="373" y1="210" x2="620" y2="210"></line>
-          <text class="an-idx" x="636" y="206">02</text>
-          <text class="an-lbl" x="672" y="206">Склопакет</text>
-          <text class="an-sub" x="672" y="228">одно- / двокамерний, енергоефективний, до 54 мм</text>
+          <g class="an-point">
+            <line class="an-lead" pathLength="1" x1="370" y1="210" x2="620" y2="210"></line>
+            <text class="an-idx" x="636" y="206">02</text>
+            <text class="an-lbl" x="672" y="206">Склопакет</text>
+            <text class="an-sub" x="672" y="228">одно- / двокамерний, енергоефективний, до 54 мм</text>
+            <g class="an-bubble"><circle cx="370" cy="210" r="11"></circle><text x="370" y="210">02</text></g>
+          </g>
           <!-- 03 фурнітура -->
-          <rect class="an-dot" x="383" y="301" width="6" height="6"></rect>
-          <line class="an-lead" x1="389" y1="304" x2="620" y2="304"></line>
-          <text class="an-idx" x="636" y="300">03</text>
-          <text class="an-lbl" x="672" y="300">Фурнітура</text>
-          <text class="an-sub" x="672" y="322">прихована, тримає стулки до 400 кг</text>
+          <g class="an-point">
+            <line class="an-lead" pathLength="1" x1="386" y1="304" x2="620" y2="304"></line>
+            <text class="an-idx" x="636" y="300">03</text>
+            <text class="an-lbl" x="672" y="300">Фурнітура</text>
+            <text class="an-sub" x="672" y="322">прихована, тримає стулки до 400 кг</text>
+            <g class="an-bubble"><circle cx="386" cy="304" r="11"></circle><text x="386" y="304">03</text></g>
+          </g>
           <!-- 04 термоміст / ущільнювач -->
-          <rect class="an-dot" x="397" y="487" width="6" height="6"></rect>
-          <line class="an-lead" x1="403" y1="490" x2="620" y2="490"></line>
-          <text class="an-idx" x="636" y="486">04</text>
-          <text class="an-lbl" x="672" y="486">Термоміст / ущільнювач</text>
-          <text class="an-sub" x="672" y="508">поліамідний міст + контур EPDM — без містків холоду</text>
+          <g class="an-point">
+            <line class="an-lead" pathLength="1" x1="400" y1="490" x2="620" y2="490"></line>
+            <text class="an-idx" x="636" y="486">04</text>
+            <text class="an-lbl" x="672" y="486">Термоміст / ущільнювач</text>
+            <text class="an-sub" x="672" y="508">поліамідний міст + контур EPDM — без містків холоду</text>
+            <g class="an-bubble"><circle cx="400" cy="490" r="11"></circle><text x="400" y="490">04</text></g>
+          </g>
           <!-- 05 поріг -->
-          <rect class="an-dot" x="417" y="528" width="6" height="6"></rect>
-          <polyline class="an-lead" points="423,531 560,531 590,566 620,566"></polyline>
-          <text class="an-idx" x="636" y="562">05</text>
-          <text class="an-lbl" x="672" y="562">Поріг</text>
-          <text class="an-sub" x="672" y="584">прихований у підлозі — нульовий рівень переходу</text>
+          <g class="an-point">
+            <polyline class="an-lead" pathLength="1" points="420,531 560,531 590,566 620,566"></polyline>
+            <text class="an-idx" x="636" y="562">05</text>
+            <text class="an-lbl" x="672" y="562">Поріг</text>
+            <text class="an-sub" x="672" y="584">прихований у підлозі — нульовий рівень переходу</text>
+            <g class="an-bubble"><circle cx="420" cy="531" r="11"></circle><text x="420" y="531">05</text></g>
+          </g>
         </g>
       </svg>
     </div>
@@ -409,17 +419,14 @@
         <button class="vrow is-active" data-v="0" type="button" aria-pressed="true">
           <span class="vrow__idx">01</span>
           <span class="vrow__main"><span class="vrow__name">Безрамне</span><span class="vrow__spec">видима рама — 0 мм</span></span>
-          <span class="vrow__arr" aria-hidden="true">→</span>
         </button>
         <button class="vrow" data-v="1" type="button" aria-pressed="false">
           <span class="vrow__idx">02</span>
           <span class="vrow__main"><span class="vrow__name">Слім-профіль</span><span class="vrow__spec">видима рама ≤ 25 мм</span></span>
-          <span class="vrow__arr" aria-hidden="true">→</span>
         </button>
         <button class="vrow" data-v="2" type="button" aria-pressed="false">
           <span class="vrow__idx">03</span>
           <span class="vrow__main"><span class="vrow__name">Розсувне панорамне</span><span class="vrow__spec">стулки lift &amp; slide</span></span>
-          <span class="vrow__arr" aria-hidden="true">→</span>
         </button>
         <a class="vconf__cta" href="#contact">Підібрати конфігурацію <span class="arr" aria-hidden="true">→</span></a>
       </div>

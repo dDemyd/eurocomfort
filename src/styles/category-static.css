@@ -46,7 +46,7 @@ button{font:inherit; cursor:pointer; border:0; background:none; color:inherit}
 
 /* section header pattern */
 .shead{display:grid; grid-template-columns:repeat(12,1fr); gap:0 24px; align-items:end; margin-bottom:clamp(40px,6vh,84px)}
-.shead .eyebrow{grid-column:1/4; align-self:start}
+.shead .eyebrow{grid-column:1/5; align-self:start}
 .shead .title{grid-column:1/10}
 .shead .lede{grid-column:9/13; align-self:end; padding-bottom:.4em}
 .eyebrow{font-family:var(--ff-mono); font-size:12px; letter-spacing:.26em; text-transform:uppercase; color:var(--ink-2); display:flex; align-items:center; gap:14px; margin-bottom:8px}
