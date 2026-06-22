@@ -41,6 +41,8 @@ body.cat-page .siteheader.scrolled{ background:rgba(10,10,10,.9); backdrop-filte
   linear-gradient(0deg, rgba(8,8,8,.96) 0%, rgba(8,8,8,0) 52%) }
 .cathero__corner{ position:absolute; inset:18px; z-index:4; pointer-events:none }
 .cathero .cmark{ width:30px; height:30px }
+@media(max-width:1024px){ .cathero__corner{ inset:20px 28px 12px } }
+@media(max-width:600px){ .cathero__corner{ inset:20px 12px 12px } }
 .cathero__inner{ position:relative; z-index:5; width:100%; max-width:var(--maxw); margin:0 auto;
   padding:140px var(--gutter) clamp(48px,7vh,90px); align-self:flex-end }
 .cathero__index{ font-family:var(--ff-mono); font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--red);
