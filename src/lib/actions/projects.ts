@@ -9,6 +9,7 @@ import {
   readLocalized,
   str,
 } from './_helpers';
+import { revalidatePublicPages } from './revalidation';
 
 const PATH = '/admin/projects';
 
@@ -44,8 +45,7 @@ export async function saveProjectAction(id: string | null, fd: FormData) {
     if (error) throw new Error(error.message);
   }
   revalidatePath(PATH);
-  revalidatePath('/uk');
-  revalidatePath('/ru');
+  revalidatePublicPages();
   redirect(PATH);
 }
 
@@ -54,6 +54,7 @@ export async function deleteProjectAction(id: string) {
   const { error } = await supabase.from('projects').delete().eq('id', id);
   if (error) throw new Error(error.message);
   revalidatePath(PATH);
+  revalidatePublicPages();
 }
 
 export async function togglePublishProjectAction(id: string, next: boolean) {
@@ -64,4 +65,5 @@ export async function togglePublishProjectAction(id: string, next: boolean) {
     .eq('id', id);
   if (error) throw new Error(error.message);
   revalidatePath(PATH);
+  revalidatePublicPages();
 }

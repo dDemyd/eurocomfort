@@ -15,7 +15,7 @@ import Footer from '@/components/sections/Footer';
 import { routing, type Locale } from '@/i18n/routing';
 import { getLandingData } from '@/lib/queries';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 3600;
 
 export default async function HomePage({
   params,

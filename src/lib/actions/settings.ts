@@ -2,6 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { getAdminSupabase } from './_helpers';
+import { revalidatePublicPages } from './revalidation';
 
 /**
  * Глобальные настройки сайта: телефон, email, адрес, соцсети — плоские
@@ -32,6 +33,5 @@ export async function saveSettingsAction(fd: FormData) {
   if (error) throw new Error(error.message);
 
   revalidatePath('/admin/settings');
-  revalidatePath('/uk');
-  revalidatePath('/ru');
+  revalidatePublicPages();
 }

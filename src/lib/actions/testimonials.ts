@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { bool, getAdminSupabase, num, readLocalized, str } from './_helpers';
+import { revalidateLandingPages } from './revalidation';
 
 const PATH = '/admin/testimonials';
 
@@ -27,8 +28,7 @@ export async function saveTestimonialAction(id: string | null, fd: FormData) {
     if (error) throw new Error(error.message);
   }
   revalidatePath(PATH);
-  revalidatePath('/uk');
-  revalidatePath('/ru');
+  revalidateLandingPages();
   redirect(PATH);
 }
 
@@ -37,6 +37,7 @@ export async function deleteTestimonialAction(id: string) {
   const { error } = await supabase.from('testimonials').delete().eq('id', id);
   if (error) throw new Error(error.message);
   revalidatePath(PATH);
+  revalidateLandingPages();
 }
 
 export async function togglePublishTestimonialAction(id: string, next: boolean) {
@@ -47,4 +48,5 @@ export async function togglePublishTestimonialAction(id: string, next: boolean) 
     .eq('id', id);
   if (error) throw new Error(error.message);
   revalidatePath(PATH);
+  revalidateLandingPages();
 }
