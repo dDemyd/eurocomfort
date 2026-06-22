@@ -8,7 +8,10 @@ type Props = {
   children: ReactNode;
   line?: boolean;
   style?: CSSProperties;
-  as?: 'div' | 'span' | 'p' | 'article' | 'section' | 'h1' | 'h2' | 'h3' | 'h4';
+  as?: 'div' | 'span' | 'p' | 'article' | 'section' | 'a' | 'h1' | 'h2' | 'h3' | 'h4';
+  /** только для as="a" */
+  href?: string;
+  'aria-label'?: string;
 };
 
 export default function Reveal({
@@ -18,6 +21,8 @@ export default function Reveal({
   line = false,
   style,
   as = 'div',
+  href,
+  'aria-label': ariaLabel,
 }: Props) {
   const ref = useRef<HTMLElement | null>(null);
 
@@ -57,9 +62,15 @@ export default function Reveal({
   const Tag = as as 'div';
   const cls = `${line ? 'reveal-line' : 'reveal'} ${className}`.trim();
   const finalStyle = { ...style, ['--i' as string]: i } as CSSProperties;
+  const extra = as === 'a' ? { href, 'aria-label': ariaLabel } : {};
 
   return (
-    <Tag ref={ref as React.RefObject<HTMLDivElement>} className={cls} style={finalStyle}>
+    <Tag
+      ref={ref as React.RefObject<HTMLDivElement>}
+      className={cls}
+      style={finalStyle}
+      {...extra}
+    >
       {line ? <span>{children}</span> : children}
     </Tag>
   );

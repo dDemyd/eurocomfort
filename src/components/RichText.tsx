@@ -2,8 +2,9 @@ import { Fragment, type ReactNode } from 'react';
 
 /**
  * Безопасный мини-парсер строк из CMS.
- * Поддерживает два «тега»:
+ * Поддерживает теги:
  *   <red>…</red>  — выделяет фрагмент брендовым красным (.mark)
+ *   <b>…</b>      — жирный фрагмент
  *   <br> / <br/>  — перенос строки
  *
  * Текст и атрибуты НЕ интерпретируются как HTML — каждый
@@ -18,12 +19,13 @@ import { Fragment, type ReactNode } from 'react';
 type Token =
   | { kind: 'text'; text: string }
   | { kind: 'red'; text: string }
+  | { kind: 'b'; text: string }
   | { kind: 'br' };
 
 function tokenize(input: string): Token[] {
   const tokens: Token[] = [];
-  const safeInput = input.replace(/<\/?(?!(?:red|br)\b)[a-z][^>]*>/gi, '');
-  const re = /<red>([\s\S]*?)<\/red>|<br\s*\/?\s*>/gi;
+  const safeInput = input.replace(/<\/?(?!(?:red|br|b)\b)[a-z][^>]*>/gi, '');
+  const re = /<red>([\s\S]*?)<\/red>|<b>([\s\S]*?)<\/b>|<br\s*\/?\s*>/gi;
   let last = 0;
   let m: RegExpExecArray | null;
   while ((m = re.exec(safeInput)) !== null) {
@@ -32,8 +34,10 @@ function tokenize(input: string): Token[] {
     }
     if (m[0].toLowerCase().startsWith('<br')) {
       tokens.push({ kind: 'br' });
-    } else {
+    } else if (m[1] !== undefined) {
       tokens.push({ kind: 'red', text: m[1] });
+    } else {
+      tokens.push({ kind: 'b', text: m[2] });
     }
     last = m.index + m[0].length;
   }
@@ -65,6 +69,7 @@ export default function RichText({
           {t.text}
         </span>
       );
+    if (t.kind === 'b') return <b key={i}>{t.text}</b>;
     return <Fragment key={i}>{t.text}</Fragment>;
   });
 
