@@ -2,6 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { getAdminSupabase, readLocalized } from './_helpers';
+import { revalidatePublicPages } from './revalidation';
 
 /**
  * Сохранение пачки content_blocks из одной формы:
@@ -27,8 +28,7 @@ export async function saveContentAction(fd: FormData) {
   if (error) throw new Error(error.message);
 
   revalidatePath('/admin/content');
-  revalidatePath('/uk');
-  revalidatePath('/ru');
+  revalidatePublicPages();
 }
 
 export async function saveContentBlockAction(key: string, fd: FormData) {
@@ -38,6 +38,5 @@ export async function saveContentBlockAction(key: string, fd: FormData) {
     .upsert({ key, value: readLocalized(fd, key), updated_at: new Date().toISOString() }, { onConflict: 'key' });
   if (error) throw new Error(error.message);
   revalidatePath('/admin/content');
-  revalidatePath('/uk');
-  revalidatePath('/ru');
+  revalidatePublicPages();
 }

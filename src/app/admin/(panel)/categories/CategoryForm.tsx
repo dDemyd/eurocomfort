@@ -61,13 +61,20 @@ export default function CategoryForm({ row }: { row?: Cat | null }) {
         </Field>
       </div>
 
-      <div className="mt-2 flex gap-3">
+      <div className="mt-2 flex flex-wrap items-center gap-3">
         <Button type="submit">{id ? 'Зберегти' : 'Створити'}</Button>
         <Link href="/admin/categories">
           <Button type="button" variant="outline">
             Скасувати
           </Button>
         </Link>
+        {id && (
+          <Link href={`/admin/categories/${id}/content`} className="ml-auto">
+            <Button type="button" variant="outline">
+              Контент сторінки →
+            </Button>
+          </Link>
+        )}
       </div>
     </form>
   );

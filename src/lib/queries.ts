@@ -1,5 +1,11 @@
 import type { Locale } from '@/i18n/routing';
-import { createClient } from './supabase/server';
+import { createPublicClient } from './supabase/public';
+import {
+  CategoryContentSchema,
+  unwrapContent,
+  type LocalizedCategoryContent,
+} from './categoryContent';
+import { categoryContentSeed } from '@/content/categories';
 
 type LocalizedJson = Record<string, unknown> | null;
 
@@ -47,7 +53,7 @@ function unwrap(value: LocalizedJson, locale: Locale): string {
   return String(localized || fallback || '');
 }
 
-function getPublicMediaUrl(path: string | null | undefined, supabase: Awaited<ReturnType<typeof createClient>>) {
+function getPublicMediaUrl(path: string | null | undefined, supabase: ReturnType<typeof createPublicClient>) {
   if (!path) return null;
   if (path.startsWith('http') || path.startsWith('/')) return path;
   return supabase.storage.from('media').getPublicUrl(path).data.publicUrl;
@@ -63,7 +69,7 @@ async function safeQuery<T>(fallback: T, query: () => Promise<T>) {
 
 export async function getCategories(locale: Locale): Promise<Category[]> {
   return safeQuery([], async () => {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
     const { data, error } = await supabase
       .from('categories')
       .select('id, slug, title, image, sort')
@@ -84,7 +90,7 @@ export async function getCategories(locale: Locale): Promise<Category[]> {
 
 export async function getProjects(locale: Locale): Promise<Project[]> {
   return safeQuery([], async () => {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
     const { data, error } = await supabase
       .from('projects')
       .select('id, slug, title, location, system, description, category_id, cover, images, sort')
@@ -110,7 +116,7 @@ export async function getProjects(locale: Locale): Promise<Project[]> {
 
 export async function getTestimonials(locale: Locale): Promise<Testimonial[]> {
   return safeQuery([], async () => {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
     const { data, error } = await supabase
       .from('testimonials')
       .select('id, author, body, sort')
@@ -130,7 +136,7 @@ export async function getTestimonials(locale: Locale): Promise<Testimonial[]> {
 
 export async function getFaq(locale: Locale): Promise<FaqItem[]> {
   return safeQuery([], async () => {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
     const { data, error } = await supabase
       .from('faq')
       .select('id, question, answer, sort')
@@ -150,7 +156,7 @@ export async function getFaq(locale: Locale): Promise<FaqItem[]> {
 
 export async function getContentBlocks(locale: Locale): Promise<LocalizedRecord> {
   return safeQuery({}, async () => {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
     const { data, error } = await supabase
       .from('content_blocks')
       .select('key, value');
@@ -165,7 +171,7 @@ export async function getContentBlocks(locale: Locale): Promise<LocalizedRecord>
 
 export async function getSettings(locale: Locale): Promise<LocalizedRecord> {
   return safeQuery({}, async () => {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
     const { data, error } = await supabase
       .from('settings')
       .select('key, value');
@@ -189,6 +195,42 @@ export async function getLandingData(locale: Locale) {
   ]);
 
   return { categories, projects, testimonials, faq, content, settings };
+}
+
+/**
+ * Контент сторінки категорії (hero + секції) під поточну локаль.
+ *
+ * Джерело: `categories.content` (jsonb) у БД; якщо там порожньо/невалідно —
+ * fallback на JSON-файл із `src/content/categories`. Завжди валідовано Zod.
+ * Повертає `null`, якщо контенту немає ні в БД, ні у файлі.
+ */
+export async function getCategoryContent(
+  locale: Locale,
+  slug: string
+): Promise<LocalizedCategoryContent | null> {
+  const fromDb = await safeQuery<unknown>(null, async () => {
+    const supabase = createPublicClient();
+    const { data, error } = await supabase
+      .from('categories')
+      .select('content')
+      .eq('slug', slug)
+      .maybeSingle();
+    if (error) throw error;
+    const content = data?.content;
+    // default '{}' означає «ще не засіяно» → беремо файл
+    if (!content || typeof content !== 'object' || Object.keys(content).length === 0) {
+      return null;
+    }
+    return content;
+  });
+
+  const candidates = [fromDb, categoryContentSeed[slug]];
+  for (const raw of candidates) {
+    if (!raw) continue;
+    const parsed = CategoryContentSchema.safeParse(raw);
+    if (parsed.success) return unwrapContent(parsed.data, locale);
+  }
+  return null;
 }
 
 export async function getCategoryData(locale: Locale, slug: string) {

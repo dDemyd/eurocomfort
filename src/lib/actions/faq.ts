@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { bool, getAdminSupabase, num, readLocalized } from './_helpers';
+import { revalidateLandingPages } from './revalidation';
 
 const PATH = '/admin/faq';
 
@@ -23,8 +24,7 @@ export async function saveFaqAction(id: string | null, fd: FormData) {
     if (error) throw new Error(error.message);
   }
   revalidatePath(PATH);
-  revalidatePath('/uk');
-  revalidatePath('/ru');
+  revalidateLandingPages();
   redirect(PATH);
 }
 
@@ -33,6 +33,7 @@ export async function deleteFaqAction(id: string) {
   const { error } = await supabase.from('faq').delete().eq('id', id);
   if (error) throw new Error(error.message);
   revalidatePath(PATH);
+  revalidateLandingPages();
 }
 
 export async function togglePublishFaqAction(id: string, next: boolean) {
@@ -43,4 +44,5 @@ export async function togglePublishFaqAction(id: string, next: boolean) {
     .eq('id', id);
   if (error) throw new Error(error.message);
   revalidatePath(PATH);
+  revalidateLandingPages();
 }
